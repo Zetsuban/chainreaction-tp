@@ -16,3 +16,13 @@ def cli_print(board, row, col):
 		print((" " if int(len(str(row_number))) == 1 else ""),
 		row_number, ":",
 				" ".join(box for box in board[row_number - 1]))
+
+
+#
+# menu GUI
+#
+
+
+#
+# game GUI
+#
