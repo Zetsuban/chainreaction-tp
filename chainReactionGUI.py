@@ -2,8 +2,9 @@ import sys
 import pygame
 from pygame.locals import *
 
-from classes import *
-
+from classes			import *
+from GUI_classes_test	import *
+from constants			import *
 
 # display board in such a fashion
 # |       1  2  3  4  5 20
@@ -23,16 +24,6 @@ def cli_print(board, row, col):
 		row_number, ":",
 				" ".join(box for box in board[row_number - 1]))
 
-WHITE	= (255, 255, 255)
-RED		= (255,   0,   0)
-MARROON	= (128,   0,   0)
-
-COLOR_PLAYER = (
-(255, 0, 0),	(0, 255, 0),	(0, 0, 255),
-(128, 0, 0),	(0, 128, 0),	(0, 0, 128),
-(255, 255, 0),	(0, 255, 255)
-)
-
 #
 # main
 #
@@ -42,10 +33,8 @@ def main():
     # load_cfg()
     # save = load_save()
 
-	screen = pygame.display.set_mode((1280,720))
-	main_menu(screen)
-
-
+	game = game_c(DEFAULT)
+	game.world_loop()
 
 
 #
@@ -56,41 +45,51 @@ def main():
 # main menu loop
 #
 
-def main_menu(screen):
+# def main_menu(screen):
+#
+# 	running = True
+#
+# 	buttons = pygame.sprite.Group()
+#
+# 	new_game = button_c("New Game", RED, 50, "NEW_GAME", 1280 / 2, 20)
+#
+# 	buttons.add(new_game)
+#
+# 	while running:
+# 		screen.fill(WHITE)
+# 		buttons.update(pygame.mouse.get_pos())
+# 		buttons.draw(screen)
+# 		pygame.display.flip()
+#
+# 		for event in pygame.event.get():
+# 			if event.type == QUIT:
+# 				return
+# 			if event.type == MOUSEBUTTONUP:
+# 				buttons.update(pygame.mouse.get_pos(), True)
 
-	running = True
 
-	buttons = pygame.sprite.Group()
+# kill world.all_object if != None add button object to all_object
+def main_menu(world):
+	if world.all_object:
+		world.all_object.empty()
 
-	new_game = button_c("New Game", RED, 50, "NEW_GAME", 1280 / 2, 20)
+	new_game_button = button_c(world.options["LANG"]["B_NEW_GAME"], BLUE,
+						50, "NEW_GAME", world.options["WIDTH"] / 2, 100)
+	world.all_object.add(new_game_button)
 
-	buttons.add(new_game)
-
-	while running:
-		screen.fill(WHITE)
-		buttons.update(pygame.mouse.get_pos())
-		buttons.draw(screen)
-		pygame.display.flip()
-
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				return
-			if event.type == MOUSEBUTTONUP:
-				buttons.update(pygame.mouse.get_pos(), True)
-
-
+	print("main_menu")
 
 #
 # Credit
 #
 def credits():
-	pass
+	print("credits")
 
 #
 # RULES
 #
 def rules():
-	pass
+	print("rules")
 
 #
 # save
@@ -100,24 +99,24 @@ def rules():
 # load cfg/save
 #
 def save_and_back():
-	pass
+	print("save_and_back")
 
 #
 # game mode menu
 #
 def game_mode_selection():
-	print("toto est rigolo")
-	pass
+	print("game_mode_selection")
+
 
 def start_game():
-	pass
+	print("start_game")
 
 # dummy function for the 'continue' button when no previous save is loaded
 def dummy():
-	pass
+	print("dummy")
 
 def exit():
-	pass
+	print("exit")
 
 if __name__ == '__main__':
 	try:

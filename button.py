@@ -1,17 +1,5 @@
-from chainReactionGUI import *
-
-button_function = {
-	"BACK"			: main_menu,
-	"NEW_GAME" 		: game_mode_selection,
-	"CONTINUE"	 	: start_game,
-	"RULES" 		: rules,
-	"CREDITS" 		: credits,
-	"EXIT" 			: exit,
-	"START" 		: start_game,
-	"AGAIN"			: game_mode_selection,
-	"SAVE_&_BACK"	: save_and_back,
-	"NONE"			: dummy
-}
+import pygame
+import button_function
 
 class button_c(pygame.sprite.Sprite):
 
@@ -35,18 +23,23 @@ class button_c(pygame.sprite.Sprite):
 			self.rect.left	= x
 			self.rect.top	= y
 
-	def update(self, mouse_pos, click = False):
+	def update(self, world):
+		mouse_pos = pygame.mouse.get_pos()
+
 		if self.rect.collidepoint(mouse_pos) and not self.overed:
 			self.overed = True
 			self.over_in()
 		elif not self.rect.collidepoint(mouse_pos) and self.overed:
 			self.overed = False
 			self.over_out()
-		if click and self.rect.collidepoint(mouse_pos):
-			button_function[self.function]()
+		if world.click and self.rect.collidepoint(mouse_pos):
+			button_function.B_FUNC[self.function](world)
 
 	def over_in(self):
-		self.image = self.font.render(self.text, True, MARROON)
+		over_color = (	self.color[0] - 100 if self.color[0] - 100 >= 0 else 0 ,
+						self.color[1] - 100 if self.color[1] - 100 >= 0 else 0 ,
+						self.color[2] - 100 if self.color[2] - 100 >= 0 else 0 )
+		self.image = self.font.render(self.text, True, over_color)
 
 	def over_out(self):
 		self.image = self.font.render(self.text, True, self.color)
