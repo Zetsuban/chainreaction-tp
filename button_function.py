@@ -25,9 +25,10 @@ def credits(world):
 						T_MEDIUM, "BACK", screen_center_x,
 						world.options["HEIGHT"] - T_MEDIUM))
 	world.all_object.add(text_zone_c(world.options["LANG"]["CREDITS"], BLUE,
-						T_SMALL, screen_center_x,
-						T_SMALL *
-						(len(world.options["LANG"]["CREDITS"]) + 1) / 1.5))
+						T_MEDIUM, screen_center_x,
+						T_MEDIUM *
+						(len(world.options["LANG"]["CREDITS"]) + 1) / 1.5,
+						"center"))
 
 def rules(world):
 
@@ -46,16 +47,13 @@ def rules(world):
 #
 # save
 #
+def save(world):
+	pass
 
-#
-# load cfg/save
-#
 def save_and_back(world):
-	print("save_and_back")
+	save(world)
+	main_menu(world)
 
-#
-# game mode menu
-#
 def game_mode_selection(world):
 	print("game_mode_selection")
 
@@ -65,7 +63,7 @@ def start_game(world):
 
 # dummy function for the 'continue' button when no previous save is loaded
 def dummy(world):
-	print("dummy")
+	pass
 
 def exit(world):
 	world.running = False

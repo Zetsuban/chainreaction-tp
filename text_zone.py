@@ -4,7 +4,7 @@ class text_zone_c(pygame.sprite.Sprite):
 
     # text is an array of strings
 
-	def __init__(self, text, color, size, x, y, pos_type = "center"):
+	def __init__(self, text, color, size, x, y, align = "left", pos_type = "center"):
 
 		super().__init__()
 
@@ -19,9 +19,15 @@ class text_zone_c(pygame.sprite.Sprite):
 
 		self.image = pygame.Surface((img_width, size * len(text) ))
 
-		for i in range(0, len(text)):
-			self.image.blit(self.font.render(text[i], True, color),
-							(0, i * (size / 1.5 + 1))             )
+		if align == "left":
+			for i in range(0, len(text)):
+				self.image.blit(self.font.render(text[i], True, color),
+								(0, i * (size / 1.5 + 1))             )
+		elif align == "center":
+			for i in range(0, len(text)):
+				line_img = self.font.render(text[i], True, color)
+				self.image.blit(line_img,
+				((img_width - line_img.get_width()) / 2, i * (size / 1.5 + 1)))
 
 		self.rect = self.image.get_rect()
 		if pos_type == "center":

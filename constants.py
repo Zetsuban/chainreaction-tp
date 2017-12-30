@@ -42,7 +42,15 @@ LANG_FR = {
 					"de pions.",
 					"· L'objectif du jeu est d'éliminer les autres joueurs en",
 					"capturant tout leurs pions."),
-"CREDITS"		: ("Crédit"),
+"CREDITS"		: (	"Crédits",
+					"",
+					"Chain-reaction"
+					"",
+					"Un projet par",
+					"",
+					"Arthur Froger",
+					"&",
+					"Joshua Menanteau"),
 "B_BACK"		: "Retour",
 "B_NEW_GAME"	: "Nouvelle Parti",
 "B_CONTINUE"	: "Continuer",
@@ -57,7 +65,15 @@ LANG_FR = {
 
 LANG_EN = {
 "RULES"			: ("Rules"),
-"CREDITS"		: ("Credits"),
+"CREDITS"		: (	"Credits",
+					"",
+					"Chain-reaction"
+					"",
+					"A project by",
+					"",
+					"Arthur Froger",
+					"&",
+					"Joshua Menanteau"),
 "B_BACK"		: "Back",
 "B_NEW_GAME"	: "New Game",
 "B_CONTINUE"	: "Continue",
