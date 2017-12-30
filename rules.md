@@ -1,4 +1,4 @@
-#Règle du jeu Chain Reaction :
+# Règle du jeu Chain Reaction :
 
 ### Règle
 
