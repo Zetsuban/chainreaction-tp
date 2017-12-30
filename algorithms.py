@@ -7,52 +7,59 @@ def newBoard(col, row):
         gameBoard.append(boardRow)
     return gameBoard
 
-def cli_print(gameBoard, col, row):
-	print(" " * 5, (" " if int(len(str(col))) == 1 else "  ").\
-		join(str(col_number) for col_number in range(1, col + 1)))
-	print(" " * 4, "-" * (col * 3))
-	for row_number in range(1, row + 1):
-		print((" " if int(len(str(row_number))) == 1 else ""),
-		row_number, ":",
-				" ".join(box for box in gameBoard[row_number - 1]))
-
 def possible(gameBoard, col, row, selCol, selRow, player):
-    if gameBoard[selCol][selRow] == player or gameBoard[selCol][selRow] == 0:
-        return True
-    return False
+    return True if gameBoard[selCol][selRow] == player or gameBoard[selCol][selRow] == 0 else False
 
 def put(gameBoard, col, row, selCol, selRow, player):
+    gameBoard[selCol][selRow] = player
     # TODO: make the put fonction
-    print("test")
 
 def loose(gameBoard, col, row, player):
-    if gmaeboard.count(player) == 0:
+    if gameBoard.count(player) == 0:
         return True
     return False
 
-def win(gameBoard, col, row, player):
-    # TODO: Find a way to check every player and if all excet one return true from the loose function then that player wins
-    print("test")
+def win(gameBoard, col, row, player, nbPlayer):
+    trueCount = 0
+    for i in range(nbPlayer):
+        if loose(gameBoard, col, row, player) == False:
+            trueCount += 1
+            winner = i
+    if trueCount > 1:
+        return False
+    print("Le Joueur", i, "remporte la partie")
+    quit()
 
 #Tmp function for test purpose
 def playerInput():
     selCol = int(input("Colonne : "))
-    selrow = int(input("Ligne : "))
-    return selCol, selrow
+    selRow = int(input("Ligne : "))
+    return selCol, selRow
 ##############################
 
 def launch(col, row, nbPlayer):
+    round = 0
     gameBoard = newBoard(col,row)
     player = 1
-    cli_print(gameBoard, col, row)
-    while win(gameBoardcol,row,player) == False:
+    #cli_print(gameBoard, col, row)
+    while round < nbPlayer:
+        if player > nbPlayer:
+            player = 1
+        selCol, selRow = playerInput()
+        put(gameBoard, col, row, selCol, selRow, player)
+        #cli_print(gameBoard, col, row)
+        print(gameBoard) #Test Print
+        player += 1
+        round += 1
+    while win(gameBoard, col, row, player, nbPlayer) == False:
         if loose(gameBoard, col, row, player) == True:
             player += 1
-        if player >= nbPlayer:
+        if player > nbPlayer:
             player = 1
-        selCol, selRow = input()
-        put(gameBoard, col, row, player)
-        cli_print(gameBoard, col, row)
+        selCol, selRow = playerInput()
+        put(gameBoard, col, row, selCol, selRow, player)
+        #cli_print(gameBoard, col, row)
+        print(gameBoard) #Test Print
         player += 1
 
 if __name__ == '__main__':
