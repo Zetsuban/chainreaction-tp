@@ -1,7 +1,7 @@
 from button		import *
 from constants	import *
+from text_zone	import *
 
-# kill world.all_object if != None add button object to all_object
 def main_menu(world):
 	if world.all_object:
 		world.all_object.empty()
@@ -13,22 +13,35 @@ def main_menu(world):
 	j = 0
 	for i in ("NEW_GAME", "CONTINUE", "RULES", "CREDITS", "EXIT"):
 		world.all_object.add(button_c(world.options["LANG"]["B_" + i], BLUE,
-							T_MEDIUM, i, screen_center_x, 200 + T_MEDIUM * j))
+							T_BIG, i, screen_center_x, 200 + T_BIG * j))
 		j += 1
 
-	print("main_menu")
-
-#
-# Credit
-#
 def credits(world):
-	print("credits")
+	world.all_object.clear(world.screen, world.background)
+	world.all_object.empty()
 
-#
-# RULES
-#
+	screen_center_x = world.options["WIDTH"] / 2
+	world.all_object.add(button_c(world.options["LANG"]["B_BACK"], BLUE,
+						T_MEDIUM, "BACK", screen_center_x,
+						world.options["HEIGHT"] - T_MEDIUM))
+	world.all_object.add(text_zone_c(world.options["LANG"]["CREDITS"], BLUE,
+						T_SMALL, screen_center_x,
+						T_SMALL *
+						(len(world.options["LANG"]["CREDITS"]) + 1) / 1.5))
+
 def rules(world):
-	print("rules")
+
+	world.all_object.clear(world.screen, world.background)
+	world.all_object.empty()
+
+	screen_center_x = world.options["WIDTH"] / 2
+	world.all_object.add(button_c(world.options["LANG"]["B_BACK"], BLUE,
+						T_MEDIUM, "BACK", screen_center_x,
+						world.options["HEIGHT"] - T_MEDIUM))
+	world.all_object.add(text_zone_c(world.options["LANG"]["RULES"], BLUE,
+						T_SMALL, screen_center_x,
+						T_SMALL *
+						(len(world.options["LANG"]["RULES"]) + 1) / 1.5))
 
 #
 # save
