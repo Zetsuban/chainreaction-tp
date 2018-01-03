@@ -13,8 +13,11 @@
 
 · Lorsque le nombre de pions sur une case est égale au nombre maximal de pions que celle ci peut comporter, chaque pion est envoyé sur une case adjacente.
 
-· Quand un pion est envoyé sur une case adjacente il capture et s'ajoute au.x pion.s déjà sur cette case.
+· Quand un pion est envoyé sur une case adjacente il capture et s'ajoute au(x) pion(s) déjà sur cette case.
 
 · Après que les pions se soient déplacés, si les cases adjacentes possèdent le nombre maximal de pions alors les pions se répartissent de nouveau et ainsi de suite jusqu'à ce qu'aucune case ne contienne son nombre maximal de pions.
 
-· L'objectif du jeu est d'éliminer les autres joueurs en capturant tout leurs pions.
+
+### Condition de Victoire
+
+· Un joueur est déclaré vainqueur lorsqu'il est le dernier à avoir des pion sur le plateau.
