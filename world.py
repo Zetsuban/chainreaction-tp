@@ -13,6 +13,8 @@ class game_c():
 		self.running	= True
 		self.board		= save
 		self.all_object	= None
+		self.background = pygame.Surface(self.screen.get_size())
+		self.background.fill(BLACK)
 		main_menu(self)
 
 	def event_loop(self):
@@ -26,6 +28,7 @@ class game_c():
 
 	def world_loop(self):
 		while self.running:
+			self.screen.blit(self.background, (0, 0))
 			self.event_loop()
 			self.all_object.update(self)
 			self.all_object.draw(self.screen)
