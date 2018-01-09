@@ -16,6 +16,9 @@ class button_c(pygame.sprite.Sprite):
 		self.image = self.font.render(text, True, color)
 		self.rect = self.image.get_rect()
 
+		if self.function == "NONE":
+			self.over_in()
+
 		if pos_type == "center":
 			self.rect.centerx = x
 			self.rect.centery = y
@@ -26,14 +29,15 @@ class button_c(pygame.sprite.Sprite):
 	def update(self, world):
 		mouse_pos = pygame.mouse.get_pos()
 
-		if self.rect.collidepoint(mouse_pos) and not self.overed:
-			self.overed = True
-			self.over_in()
-		elif not self.rect.collidepoint(mouse_pos) and self.overed:
-			self.overed = False
-			self.over_out()
-		if world.click and self.rect.collidepoint(mouse_pos):
-			button_function.B_FUNC[self.function](world)
+		if self.function != "NONE":
+			if (self.rect.collidepoint(mouse_pos) and not self.overed):
+				self.overed = True
+				self.over_in()
+			elif not self.rect.collidepoint(mouse_pos) and self.overed:
+				self.overed = False
+				self.over_out()
+			if world.click and self.rect.collidepoint(mouse_pos):
+				button_function.B_FUNC[self.function](world)
 
 	def over_in(self):
 		over_color = (	self.color[0] - 100 if self.color[0] - 100 >= 0 else 0 ,

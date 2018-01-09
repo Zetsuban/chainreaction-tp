@@ -2,8 +2,6 @@
 
 ·load cfg/save
 
-·make dummy button (continue without a save) overed all the time
-
 ·add English rules
 
 ·game option menu

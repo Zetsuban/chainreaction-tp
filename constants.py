@@ -40,6 +40,8 @@ LANG_FR = {
 					"pions se répartissent de nouveau et ainsi de suite",
 					"jusqu'à ce qu'aucune case ne contienne son nombre maximal",
 					"de pions.",
+					"",
+					"Condition de Victoire",
 					"· L'objectif du jeu est d'éliminer les autres joueurs en",
 					"capturant tout leurs pions."),
 "CREDITS"		: (	"Crédits",
@@ -51,6 +53,11 @@ LANG_FR = {
 					"Arthur Froger",
 					"&",
 					"Joshua Menanteau"),
+"M_SOLO_GM"		: ("Joueur VS IA",),
+"M_MULTI_GM"	: ("Joueur VS Joueur",),
+"M_NB_PLY_SLCT"	: ("Nombre de Joueurs",),
+"M_NB_COL_SLCT"	: ("Nombre de colone",),
+"M_NB_ROW_SLCT"	: ("Nombre de ligne",),
 "B_BACK"		: "Retour",
 "B_NEW_GAME"	: "Nouvelle Parti",
 "B_CONTINUE"	: "Continuer",
@@ -64,7 +71,28 @@ LANG_FR = {
 }
 
 LANG_EN = {
-"RULES"			: ("Rules"),
+"RULES"			: (	"Rules",
+					"· A game can be played by 2 to 8 players",
+					"· Each cell can contain as many piece as it has nearby",
+					"cell",
+					"",
+					"Turn Sequence",
+					"· Each turn, each player will be able to put down a piece",
+					"on a cell of the board that holds none or one of his",
+					"piece.",
+					"· When the number of piece on a cell is equal to the",
+					"maximum number that this one can hold, each pieces are",
+					"individually send on the adjacent cell.",
+					"· When a piece is send to a nearby cell, it capture and",
+					" adds itself to the present piece(s).",
+					"· If a piece has just been sent and the cell it is now on",
+					"now contains the maximum number of pieces it can contains",
+					"then the pices get send again until no cell contains the",
+					"maximum number of cell."
+					"",
+					"Victory",
+					"· A player is proclaimed winner when he is the last one",
+					"to have pieces on the board."),
 "CREDITS"		: (	"Credits",
 					"",
 					"Chain-reaction"
@@ -74,6 +102,11 @@ LANG_EN = {
 					"Arthur Froger",
 					"&",
 					"Joshua Menanteau"),
+"M_SOLO_GM"		: ("Player VS AI",),
+"M_MULTI_GM"	: ("Player VS Player",),
+"M_NB_PLY_SLCT"	: ("Number of player",),
+"M_NB_COL_SLCT"	: ("Number of column",),
+"M_NB_ROW_SLCT"	: ("Number of row",),
 "B_BACK"		: "Back",
 "B_NEW_GAME"	: "New Game",
 "B_CONTINUE"	: "Continue",
@@ -89,5 +122,5 @@ LANG_EN = {
 DEFAULT = {
 "HEIGHT"	: 720,
 "WIDTH"		: 1280,
-"LANG"		: LANG_FR
+"LANG"		: LANG_EN
 }

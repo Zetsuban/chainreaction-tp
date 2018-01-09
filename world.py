@@ -11,7 +11,8 @@ class game_c():
 													options["HEIGHT"]))
 		self.click		= False
 		self.running	= True
-		self.board		= save
+		self.save		= save
+		self.board		= None
 		self.all_object	= None
 		self.background = pygame.Surface(self.screen.get_size())
 		self.background.fill(BLACK)
