@@ -1,6 +1,7 @@
-from button		import *
-from constants	import *
-from text_zone	import *
+from button			import *
+from constants		import *
+from text_zone		import *
+from var_button		import *
 
 def main_menu(world):
 
@@ -67,10 +68,16 @@ def game_mode_selection(world):
 	screen_center_x = world.options["WIDTH"] / 2
 	screen_center_y = world.options["HEIGHT"] / 2
 	j = 0
-	for i in ("M_NB_PLY_SLCT", "M_NB_COL_SLCT", "M_NB_ROW_SLCT"):
-		world.all_object.add(text_zone_c(world.options["LANG"][i], BLUE,
-			T_MEDIUM, screen_center_x, screen_center_y + (T_MEDIUM * (j - 1))))
+	for i in (("M_NB_PLY_SLCT", PLAYER), ("M_NB_COL_SLCT", NB_COL),
+				("M_NB_ROW_SLCT", NB_ROW)):
+		world.all_object.add(text_zone_c(world.options["LANG"][i[0]], BLUE,
+			T_MEDIUM, screen_center_x - 100, screen_center_y + (T_MEDIUM * (j - 1))))
+		world.all_object.add(var_button_c(WHITE, T_MEDIUM,
+			screen_center_x + 150, screen_center_y + (T_MEDIUM * (j - 1)),
+			world.game_set[j], i[1]))
 		j += 1
+	world.all_object.add(button_c(world.options["LANG"]["B_START"], BLUE,
+		T_MEDIUM, "START", screen_center_x, screen_center_y + (T_MEDIUM * j)))
 	world.all_object.add(button_c(world.options["LANG"]["B_BACK"], BLUE,
 		T_MEDIUM, "BACK", screen_center_x, world.options["HEIGHT"] - T_MEDIUM))
 

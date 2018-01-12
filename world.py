@@ -9,9 +9,11 @@ class game_c():
 		self.options	= options
 		self.screen		= pygame.display.set_mode((	options["WIDTH"],
 													options["HEIGHT"]))
+		self.clock		= pygame.time.Clock()
 		self.click		= False
 		self.running	= True
 		self.save		= save
+		self.game_set	= [1, 4, 4]
 		self.board		= None
 		self.all_object	= None
 		self.background = pygame.Surface(self.screen.get_size())
@@ -22,10 +24,9 @@ class game_c():
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				self.exit()
-			if event.type == MOUSEBUTTONDOWN:
-				self.click = True
 			if event.type == MOUSEBUTTONUP:
-				self.click = False
+				self.click = True
+
 
 	def world_loop(self):
 		while self.running:
@@ -33,7 +34,9 @@ class game_c():
 			self.event_loop()
 			self.all_object.update(self)
 			self.all_object.draw(self.screen)
+			self.click = False
 			pygame.display.flip()
+			self.clock.tick(60)
 
 	def exit(self):
 		self.running = False

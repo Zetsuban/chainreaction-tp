@@ -15,11 +15,13 @@ D_MAGENTA	= (128,   0, 128)
 D_GREEN		= (  0, 128,   0)
 D_YELLOW	= (128, 128,   0)
 
+# color of different players
 COLOR_PLAYER = (
 BLUE, GREEN, YELLOW, MAGENTA,
 D_BLUE, D_GREEN, D_YELLOW, D_MAGENTA
 )
 
+# french texts
 LANG_FR = {
 "RULES"			: (	"Règle :",
 					"· Une partie est jouée par 2 à 8 joueurs",
@@ -70,6 +72,7 @@ LANG_FR = {
 "B_NONE"		: "Continuer"
 }
 
+# english texts
 LANG_EN = {
 "RULES"			: (	"Rules",
 					"· A game can be played by 2 to 8 players",
@@ -119,8 +122,17 @@ LANG_EN = {
 "B_NONE"		: "Continue"
 }
 
+# default general settings
 DEFAULT = {
 "HEIGHT"	: 720,
 "WIDTH"		: 1280,
 "LANG"		: LANG_EN
 }
+
+# limites for the number of player and dimension of the board
+GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))
+
+# var_type for var_button_c
+PLAYER = 0
+NB_ROW = 1
+NB_COL = 2

@@ -7,14 +7,14 @@ class button_c(pygame.sprite.Sprite):
 
 		super().__init__()
 
-		self.color = color
-		self.function = function
-		self.overed = False
-		self.text = text
+		self.color		= color
+		self.function	= function
+		self.overed		= False
+		self.text		= text
 
-		self.font = pygame.font.SysFont(None, size)
-		self.image = self.font.render(text, True, color)
-		self.rect = self.image.get_rect()
+		self.font	= pygame.font.SysFont(None, size)
+		self.image	= self.font.render(text, True, color)
+		self.rect	= self.image.get_rect()
 
 		if self.function == "NONE":
 			self.over_in()
