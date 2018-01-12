@@ -2,10 +2,6 @@
 
 ·load cfg/save
 
-·add English rules
-
-·game option menu
-
 ### board
 
 ·dark grey border
