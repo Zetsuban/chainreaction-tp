@@ -4,6 +4,6 @@
 
 ### if move possible
 - get list of changes
-a list of all future state in an animation
-a state contains a list of all box changed
-box = ((posx, posy), player, nb_pawn)
+.a list of all future state in an animation
+.a state contains a list of all box changed
+.box = ((posx, posy), player, nb_pawn)
