@@ -3,6 +3,7 @@ from constants		import *
 from text_zone		import *
 from var_button		import *
 from var_text		import *
+from board			import *
 
 def main_menu(world):
 
@@ -14,6 +15,7 @@ def main_menu(world):
 	screen_center_x = world.options["WIDTH"] / 2
 	screen_center_y = world.options["HEIGHT"] / 2
 
+	world.game_set = [1, 4, 4]
 	j = 0
 	for i in ("NEW_GAME", "CONTINUE" if world.save else "NONE",
 				"RULES", "CREDITS", "EXIT"):
@@ -116,9 +118,13 @@ def start_game(world):
 		T_MEDIUM, "SAVE_&_BACK", T_MEDIUM / 2,
 		world.options["HEIGHT"] - T_MEDIUM,
 		"top_left"))
-	toto = dummy_c(world)
-	world.all_object.add(toto)
-	world.all_object.add(var_text_c(toto.turn , T_MEDIUM, BLUE, "Number of Turns : ", 0, 0))
+	world.all_object.add(var_text_c("TURN" , T_MEDIUM, BLUE,
+						world.options["LANG"]["M_" + "TURN"], 0, 0))
+	world.all_object.add(var_text_c("PLAYER" , T_MEDIUM, BLUE,
+						world.options["LANG"]["M_" + "PLAYER"], T_MEDIUM, 0))
+	world.all_object.add(board_c(world, world.save,
+								(world.game_set[1], world.game_set[2]),
+								world.game_set[0]))
 
 
 

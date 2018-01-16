@@ -59,6 +59,9 @@ class var_button_c(pygame.sprite.Sprite):
 				self.over_in("plus")
 				self.set_box(self.rect.centerx, self.rect.centery)
 
+		if world.game_set[self.var_type] != self.var:
+			world.game_set[self.var_type] = self.var
+
 	def over_in(self, side):
 		over_color = (	self.color[0] - 100 if self.color[0] - 100 >= 0 else 0 ,
 						self.color[1] - 100 if self.color[1] - 100 >= 0 else 0 ,

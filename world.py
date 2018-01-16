@@ -13,6 +13,7 @@ class game_c():
 		self.click		= False
 		self.running	= True
 		self.save		= save
+        # self.game_set = [nb_player, nb_row, nb_col]
 		self.game_set	= [1, 4, 4]
 		self.board		= None
 		self.all_object	= None

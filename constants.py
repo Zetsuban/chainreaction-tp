@@ -1,3 +1,5 @@
+import board
+
 # Text size
 T_BIG		= 100
 T_MEDIUM	= 50
@@ -6,6 +8,9 @@ T_SMALL		= 25
 # COLOR		  (  R,   G,   B)
 WHITE		= (255, 255, 255)
 BLACK		= (  0,   0,   0)
+L_GRAY		= (200, 200, 200)
+M_GRAY		= (128, 128, 128)
+D_GRAY		= ( 50,  50,  50)
 BLUE		= (  0,   0, 255)
 MAGENTA		= (255,   0, 255)
 GREEN		= (  0, 255,   0)
@@ -60,6 +65,8 @@ LANG_FR = {
 "M_NB_PLY_SLCT"	: ("Nombre de Joueurs",),
 "M_NB_COL_SLCT"	: ("Nombre de colone",),
 "M_NB_ROW_SLCT"	: ("Nombre de ligne",),
+"M_TURN"		: "Tours  : ",
+"M_PLAYER"		: "Joueur : ",
 "B_BACK"		: "Retour",
 "B_NEW_GAME"	: "Nouvelle Parti",
 "B_CONTINUE"	: "Continuer",
@@ -110,6 +117,8 @@ LANG_EN = {
 "M_NB_PLY_SLCT"	: ("Number of player",),
 "M_NB_COL_SLCT"	: ("Number of column",),
 "M_NB_ROW_SLCT"	: ("Number of row",),
+"M_TURN"		: "Turns  : ",
+"M_PLAYER"		: "Player : ",
 "B_BACK"		: "Back",
 "B_NEW_GAME"	: "New Game",
 "B_CONTINUE"	: "Continue",
@@ -136,3 +145,15 @@ GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))
 PLAYER = 0
 NB_ROW = 1
 NB_COL = 2
+
+# var_type for var_text_c
+VAR_TYPE = {
+"TURN"		: board.board_c,
+"PLAYER"	: board.board_c
+}
+turn			= 2
+current_player	= 0
+VAR = {
+"TURN"		: "turn",
+"PLAYER"	: "current_player"
+}
