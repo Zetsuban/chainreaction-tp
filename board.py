@@ -93,6 +93,14 @@ class board_c(pygame.sprite.Sprite):
 				box_img = pygame.Surface((j[0].width, j[0].height))
 				box_img.fill(c.D_GRAY if j[1] else c.M_GRAY)
 				self.image.blit(box_img, j[0])
+				if j[1]:
+					pygame.draw.aaline(self.image, c.RED,
+									j[0].topleft,
+									j[0].bottomright, 3)
+					pygame.draw.aaline(self.image, c.RED,
+									j[0].topright,
+									j[0].bottomleft, 3)
+
         # draw vertical sides of the boxes
 		for i in range(0, self.size[1]):
 			pygame.draw.line(self.image,
