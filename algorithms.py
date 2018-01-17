@@ -1,6 +1,7 @@
-#
+from random import randint
+from itertools import repeat
+
 # Create the board at the start of the game
-#
 def newBoard(col, row):
     gameBoard = []
     for i in range(row):
@@ -10,17 +11,14 @@ def newBoard(col, row):
         gameBoard.append(boardRow)
     return gameBoard
 
-#
 # Check if a movement is possible
-#
 def possible(gameBoard, col, row, selCol, selRow, player):
     if gameBoard[selRow][selCol][1] == "0" or gameBoard[selRow][selCol][0] == str(player):
         return True
     return False
+# This function isn't used since the verification is made in the graphical part but I still let it here since it was asked
 
-#
 # Test Print in console for test purpose
-#
 def cli_print(board, row, col):
 	print(" " * 6, ("  " if int(len(str(col))) == 1 else "  ").\
 		join(str(col_number) for col_number in range(1, col + 1)))
@@ -30,117 +28,91 @@ def cli_print(board, row, col):
 		row_number, ":",
 				" ".join(str(box) for box in board[row_number - 1]))
 
-#
+# Get the adjacents cell
+#def adjacentFunc(row, col, maxRow, maxCol): For non startup adjacents
+def adjacentFunc(maxRow, maxCol):
+    adjacents = [[[] for j in repeat(None, maxCol)] for i in repeat(None, maxRow)]
+    for row in range(maxRow):
+        for col in range(maxCol):
+            adjacentTmp = [[row + 1, col], [row - 1, col], [row, col + 1], [row, col - 1]]
+            if row == 0:
+                adjacentTmp.remove([row - 1, col])
+            if row == maxRow - 1:
+                adjacentTmp.remove([row + 1, col])
+            if col == 0:
+                adjacentTmp.remove([row, col - 1])
+            if col == maxCol - 1:
+                adjacentTmp.remove([row, col + 1])
+            adjacents[row][col] = adjacentTmp
+    return adjacents
+
 # Main function for the game
-#
-def put(gameBoard, col, row, selCol, selRow, player):
-    pion = gameBoard[selRow][selCol]
-    gameBoard[selRow][selCol] = str(player) + str(int(pion[1]) + 1)
-    pion = gameBoard[selRow][selCol]
+def put(gameBoard, col, row, selCol, selRow, player, adjacents):
+    gameBoard[selRow][selCol] = str(player) + str(int(gameBoard[selRow][selCol][1]) + 1)
+    changed = []
+    before = []
 
-    # First make a list of the adjacent cells
-    # Then "overflow" to all neighbors
-    adjacent = []
-    if selRow == 0:
-        adjacent.append([selRow + 1, selCol])
-    if selRow == row - 1:
-        adjacent.append([selRow - 1, selCol])
-    else:
-        adjacent.append([selRow + 1, selCol])
-        adjacent.append([selRow - 1, selCol])
-    if selCol == 0:
-        adjacent.append([selRow, selCol + 1])
-    if selCol == col -1:
-        adjacent.append([selRow, selCol - 1])
-    else:
-        adjacent.append([selRow, selCol + 1])
-        adjacent.append([selRow, selCol - 1])
+    # Detect if number is out of range and then add to adjacents
+    ##adjacents = adjacentFunc(selRow, selCol, row, col)
 
-    print(adjacent)
+    if int(gameBoard[selRow][selCol][1]) >= len(adjacents[selRow][selCol]):
 
-    # if not adjacent: # Then the selected cell has 4 border
-    #     #print('else')
-    #     if int(pion[1]) == 4:
-    #         gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #         gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #         gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #         gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #         gameBoard[selRow][selCol] = "00"
+        before.append([[selRow,selCol], int(gameBoard[selRow][selCol][0]), int(gameBoard[selRow][selCol][1])])
+        changed.append([[selRow,selCol], 0, 0])
+
+        for i in range(len(adjacents[selRow][selCol])):
+            stuck = adjacents[selRow][selCol][i]
+            before.append([[stuck[0],stuck[1]], int(gameBoard[stuck[0]][stuck[1]][0]),
+                           int(gameBoard[stuck[0]][stuck[1]][1])])
+            gameBoard[stuck[0]][stuck[1]] = str(player) + str(int(gameBoard[stuck[0]][stuck[1]][1]) + 1)
+            changed.append([[stuck[0],stuck[1]], player, int(gameBoard[stuck[0]][stuck[1]][1])])
+
+        gameBoard[selRow][selCol] = "00"
 
 
-    # # Detect that the selected case is in an angle : The cell has 2 border
-    # if (selRow == 0 and selCol == 0) or (selRow == 0 and selCol == col)\
-    #  or (selRow == row and selCol == 0) or (selRow == row and selCol == col):
-    #     print(pion[1])
-    #     if int(pion[1]) == 2:
-    #         if (selRow == 0 and selCol == 0):
-    #             gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif (selRow == 0 and selCol == col):
-    #             gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif (selRow == row and selCol == 0):
-    #             gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif (selRow == row and selCol == col):
-    #             gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #
-    # # Detect that a cell is on a border but not an angle : The cell has 3 border
-    # elif (selCol > 0 and selCol < col and selRow == 0)\
-    #  or (selRow == row and selCol > 0 and selCol < col)\
-    #  or (selCol == 0 and selRow > 0 and selRow < row)\
-    #  or (selCol == col and selRow > 0 and selRow < row):
-    #     #print('eliff')
-    #     if int(pion[1]) == 3:
-    #         if selRow == 0:
-    #             gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #             gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif selRow == row - 1:
-    #             gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #             gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif selCol == 0:
-    #             gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #             gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #         elif selCol == col - 1:
-    #             gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #             gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #             gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #             gameBoard[selRow][selCol] = "00"
-    #
-    # else: # Then the selected cell has 4 border
-    #     #print('else')
-    #     if int(pion[1]) == 4:
-    #         gameBoard[selRow + 1][selCol] = str(player) + str(int(gameBoard[selRow + 1][selCol][1]) + 1)
-    #         gameBoard[selRow][selCol + 1] = str(player) + str(int(gameBoard[selRow][selCol + 1][1]) + 1)
-    #         gameBoard[selRow - 1][selCol] = str(player) + str(int(gameBoard[selRow - 1][selCol][1]) + 1)
-    #         gameBoard[selRow][selCol - 1] = str(player) + str(int(gameBoard[selRow][selCol - 1][1]) + 1)
-    #         gameBoard[selRow][selCol] = "00"
+        # for i in range(len(adjacents[selRow][selCol])):
+        #     before.append([[adjacents[i][0],adjacents[i][1]], int(gameBoard[adjacents[i][0]][adjacents[i][1]][0]),
+        #                    int(gameBoard[adjacents[i][0]][adjacents[i][1]][1])])
+        #     gameBoard[adjacents[i][0]][adjacents[i][1]] = str(player) +\
+        #     str(int(gameBoard[adjacents[i][0]][adjacents[i][1]][1]) + 1)
+        #     changed.append([[adjacents[i][0],adjacents[i][1]], player, int(gameBoard[adjacents[i][0]][adjacents[i][1]][1])])
+        #
+        # gameBoard[selRow][selCol] = "00"
+        #
+        # adjacents = []
+        # for j in range(len(adjacents)):
+        #     selRow = changed[j][0][0]
+        #     selCol = changed[j][0][1]
+        #     pawn = changed[j][2]
+        #     adjacents.append(adjacentsFunc(selRow, selCol, row, col))
 
+    # changed = [[[row, col], player, pawn],[[row, col], player, pawn],[[row, col], player, pawn]]
+    # Check in changed if pawns > adjacents
 
+def ia(gameBoard, row, col, player):
+    selRow = randint(0, row - 1)
+    selCol = randint(0, col - 1)
+    while not possible(gameBoard, col, row, selCol, selRow, player):
+        selRow = randint(0, row - 1)
+        selCol = randint(0, col - 1)
+    return selRow, selCol
+
+# Check if a player is still in game
 def loose(gameBoard, col, row, player, turn ,nbPlayer):
-    currentPlayerList = []
+    inGame = []
     for i in range(row):
         for j in range(col):
-            currentPlayerList.append(gameBoard[i][j][0])
-    if currentPlayerList.count(str(player)) == 0 and turn >= nbPlayer:
+            inGame.append(gameBoard[i][j][0])
+    if inGame.count(str(player)) == 0 and turn >= nbPlayer:
         return True
     return False
 
+# Checks if number of player is more than 1 and if yes then this player is the winner
 def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
-    for i in range(nbPlayer):
+    for i in range(1,nbPlayer+1):
         if loose(gameBoard, col, row, i, turn, nbPlayer) == True:
-            playerList.remove(i)
+            if playerList.count(i) > 0:
+                playerList.remove(i)
     if len(playerList) > 1:
         return False
     return True
@@ -152,34 +124,59 @@ def playerInput():
     return selCol, selRow
 ##############################
 
-def launch(col, row, nbPlayer):
+# Main function that launches every other one
+def launch(col, row, nbPlayer, saved):
     playerList = []
     for i in range(1,nbPlayer+1):
         playerList.append(i)
-
     turn = 0
-    gameBoard = newBoard(col,row)
     player = 1
+    if saved == True:
+        gameBoard == board() # Saved from csv
+    else:
+        gameBoard = newBoard(col,row)
+    adjacents = adjacentFunc(row, col)
     cli_print(gameBoard, row, col)
-    #print(gameBoard)
 
-    while win(gameBoard, col, row, player, nbPlayer, turn, playerList) == False:
+    while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         if loose(gameBoard, col, row, player, turn, nbPlayer) == True:
             player += 1
         print("\nPlayer", player, "it's your turn")
-        selCol, selRow = playerInput()
-        put(gameBoard, col, row, selCol, selRow, player)
+        selCol, selRow = playerInput() # Tes Input
+        put(gameBoard, col, row, selCol, selRow, player, adjacents)
         print("\n")
         cli_print(gameBoard, row, col) #Test Print
         player = player % nbPlayer + 1
         turn += 1
-    print("player", player + 1, "wins")
+    print("player", playerList[0], "wins")
+
+# Main function for solo play
+def launchSolo(row, col, saved):
+    playerList = [1,2]
+    nbPlayer = 2
+    turn = 0
+    gameBoard = newBoard(col,row)
+    adjacents = adjacentFunc(row, col)
+    player = 1
+    cli_print(gameBoard, row, col)
+
+    while win(gameBoard, col, row, player, nbPlayer, turn, playerList) == False:
+        if player == 2:
+            selRow, selCol = ia(gameBoard, row, col, player)
+        else:
+            selCol, selRow = playerInput() # Tes Input
+        put(gameBoard, col, row, selCol, selRow, player, adjacents)
+        print("\n")
+        cli_print(gameBoard, row, col) #Test Print
+        player = (player % 2) + 1
+        turn += 1
 
 if __name__ == '__main__':
-    #col = int(input("board col : "))            #
-    #row = int(input("board row : "))            # Will be inported from gui
-    #nbPlayer = int(input("nbPlayer : "))        #
     row = 4
     col = 4
     nbPlayer = 2
-    launch(col,row,nbPlayer)
+    saved = False
+    if nbPlayer >= 2:
+        launch(col,row,nbPlayer, saved)
+    else:
+        launchSolo(row, col, saved)
