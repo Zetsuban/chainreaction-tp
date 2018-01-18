@@ -14,7 +14,7 @@ class game_c():
 		self.running	= True
 		self.save		= save
         # self.game_set = [nb_player, nb_row, nb_col]
-		self.game_set	= [1, 4, 4]
+		self.game_set	= [2, 4, 4]
 		self.board		= None
 		self.all_object	= None
 		self.background = pygame.Surface(self.screen.get_size())

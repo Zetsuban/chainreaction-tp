@@ -44,38 +44,21 @@ def adjacentFunc(maxRow, maxCol):
             if col == maxCol - 1:
                 adjacentTmp.remove([row, col + 1])
             adjacents[row][col] = adjacentTmp
-    return adjacents
-    adjacents = [[[row, col],[row, col],[row, col],[row, col]],[[row, col],[row, col],[row, col],[row, col]]]
+    return(adjacents)
 
 # Main function for the game
-def put(gameBoard, col, row, selCol, selRow, player, adjacents):
-    gameBoard[selRow][selCol] = str(player) + str(int(gameBoard[selRow][selCol][1]) + 1)
-    changed = []
-    before = []
+def recursive_put(board, col, row, selCol, selRow, player, adjacent = None):
 
-    # Detect if number is out of range and then add to adjacents
-    ##adjacents = adjacentFunc(selRow, selCol, row, col)
+	if adjacent == None:
+		adjacent = adjacentFunc(row, col)
 
-    if int(gameBoard[selRow][selCol][1]) >= len(adjacents[selRow][selCol]):
-
-        before.append([[selRow,selCol], int(gameBoard[selRow][selCol][0]), int(gameBoard[selRow][selCol][1])])
-        changed.append([[selRow,selCol], 0, 0])
-
-        for i in range(len(adjacents[selRow][selCol])):
-            stuck = adjacents[selRow][selCol][i]
-            cell = gameBoard[stuck[0]][stuck[1]]
-
-            before.append([[stuck[0],stuck[1]], int(cell[0]), int(cell[1])])
-            gameBoard[stuck[0]][stuck[1]] = str(player) + str(int(cell[1]) + 1)
-            changed.append([[stuck[0],stuck[1]], player, int(cell[1])])
-
-            if int(cell[1]) >= len(stuck):
-                put(gameBoard, col, row, stuck[1], stuck[0], player, adjacents)
-
-        gameBoard[selRow][selCol] = "00"
-
-    # changed = [[[row, col], player, pawn],[[row, col], player, pawn],[[row, col], player, pawn]]
-    # Check in changed if pawns > adjacents
+	if (int(board[selRow][selCol][0])) >= len(adjacent[selRow][selCol]):
+		board[selRow][selCol] = "00"
+		for i in adjacent[selRow][selCol]:
+			board[i[0]][i[1]] = str(int(board[i[0]][i[1]][0]) + 1) + str(player)
+		for i in adjacent[selRow][selCol]:
+			if int(board[i[0]][i[1]][0]) >= len(adjacent[i[0]][i[1]]):
+				recursive_put(board, col, row, i[1], i[0], player, adjacent)
 
 def ia(gameBoard, row, col, player):
     selRow = randint(0, row - 1)

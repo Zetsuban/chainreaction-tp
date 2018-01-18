@@ -4,6 +4,7 @@ from text_zone		import *
 from var_button		import *
 from var_text		import *
 from board			import *
+from algorithms		import *
 
 def main_menu(world):
 
@@ -15,7 +16,6 @@ def main_menu(world):
 	screen_center_x = world.options["WIDTH"] / 2
 	screen_center_y = world.options["HEIGHT"] / 2
 
-	world.game_set = [1, 4, 4]
 	j = 0
 	for i in ("NEW_GAME", "CONTINUE" if world.save else "NONE",
 				"RULES", "CREDITS", "EXIT"):
@@ -84,28 +84,6 @@ def game_mode_selection(world):
 	world.all_object.add(button_c(world.options["LANG"]["B_BACK"], BLUE,
 		T_MEDIUM, "BACK", screen_center_x, world.options["HEIGHT"] - T_MEDIUM))
 
-class dummy_c(pygame.sprite.Sprite):
-
-	def __init__(self, world):
-
-		super().__init__()
-
-		self.image = pygame.Surface((world.options["HEIGHT"], world.options["HEIGHT"]))
-		self.rect = self.image.get_rect()
-		self.rect.centerx = world.options["WIDTH"] / 2
-		self.rect.centery = world.options["HEIGHT"] / 2
-		self.image.fill(WHITE)
-		self.tick = 0
-		self.turn = 0
-
-	def update(self, world):
-		if self.tick % 60 == 0:
-			print("Turn :", self.turn)
-			self.turn += 1
-			self.tick = 0
-		self.tick += 1
-
-
 def start_game(world):
 
 	if world.all_object:
@@ -122,7 +100,8 @@ def start_game(world):
 						world.options["LANG"]["M_" + "TURN"], 0, 0))
 	world.all_object.add(var_text_c("PLAYER" , T_MEDIUM, BLUE,
 						world.options["LANG"]["M_" + "PLAYER"], T_MEDIUM, 0))
-	world.all_object.add(board_c(world, world.save,
+	world.all_object.add(board_c(world,
+								newBoard(world.game_set[1], world.game_set[2]),
 								(world.game_set[1], world.game_set[2]),
 								world.game_set[0]))
 
