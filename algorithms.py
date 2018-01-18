@@ -45,6 +45,7 @@ def adjacentFunc(maxRow, maxCol):
                 adjacentTmp.remove([row, col + 1])
             adjacents[row][col] = adjacentTmp
     return adjacents
+    adjacents = [[[row, col],[row, col],[row, col],[row, col]],[[row, col],[row, col],[row, col],[row, col]]]
 
 # Main function for the game
 def put(gameBoard, col, row, selCol, selRow, player, adjacents):
@@ -62,29 +63,16 @@ def put(gameBoard, col, row, selCol, selRow, player, adjacents):
 
         for i in range(len(adjacents[selRow][selCol])):
             stuck = adjacents[selRow][selCol][i]
-            before.append([[stuck[0],stuck[1]], int(gameBoard[stuck[0]][stuck[1]][0]),
-                           int(gameBoard[stuck[0]][stuck[1]][1])])
-            gameBoard[stuck[0]][stuck[1]] = str(player) + str(int(gameBoard[stuck[0]][stuck[1]][1]) + 1)
-            changed.append([[stuck[0],stuck[1]], player, int(gameBoard[stuck[0]][stuck[1]][1])])
+            cell = gameBoard[stuck[0]][stuck[1]]
+
+            before.append([[stuck[0],stuck[1]], int(cell[0]), int(cell[1])])
+            gameBoard[stuck[0]][stuck[1]] = str(player) + str(int(cell[1]) + 1)
+            changed.append([[stuck[0],stuck[1]], player, int(cell[1])])
+
+            if int(cell[1]) >= len(stuck):
+                put(gameBoard, col, row, stuck[1], stuck[0], player, adjacents)
 
         gameBoard[selRow][selCol] = "00"
-
-
-        # for i in range(len(adjacents[selRow][selCol])):
-        #     before.append([[adjacents[i][0],adjacents[i][1]], int(gameBoard[adjacents[i][0]][adjacents[i][1]][0]),
-        #                    int(gameBoard[adjacents[i][0]][adjacents[i][1]][1])])
-        #     gameBoard[adjacents[i][0]][adjacents[i][1]] = str(player) +\
-        #     str(int(gameBoard[adjacents[i][0]][adjacents[i][1]][1]) + 1)
-        #     changed.append([[adjacents[i][0],adjacents[i][1]], player, int(gameBoard[adjacents[i][0]][adjacents[i][1]][1])])
-        #
-        # gameBoard[selRow][selCol] = "00"
-        #
-        # adjacents = []
-        # for j in range(len(adjacents)):
-        #     selRow = changed[j][0][0]
-        #     selCol = changed[j][0][1]
-        #     pawn = changed[j][2]
-        #     adjacents.append(adjacentsFunc(selRow, selCol, row, col))
 
     # changed = [[[row, col], player, pawn],[[row, col], player, pawn],[[row, col], player, pawn]]
     # Check in changed if pawns > adjacents
@@ -131,8 +119,10 @@ def launch(col, row, nbPlayer, saved):
         playerList.append(i)
     turn = 0
     player = 1
+    #writeSave= open('save.txt', 'w')
+    #readSave = open('save.txt', 'r')
     if saved == True:
-        gameBoard == board() # Saved from csv
+        gameBoard = readSave.read().split('\n') # Saved from csv
     else:
         gameBoard = newBoard(col,row)
     adjacents = adjacentFunc(row, col)
@@ -148,6 +138,8 @@ def launch(col, row, nbPlayer, saved):
         cli_print(gameBoard, row, col) #Test Print
         player = player % nbPlayer + 1
         turn += 1
+        # for item in gameBoard:
+        #     writeSave.write("%s\n" % item)
     print("player", playerList[0], "wins")
 
 # Main function for solo play
@@ -155,9 +147,12 @@ def launchSolo(row, col, saved):
     playerList = [1,2]
     nbPlayer = 2
     turn = 0
-    gameBoard = newBoard(col,row)
-    adjacents = adjacentFunc(row, col)
     player = 1
+    if saved == True:
+        gameBoard == board() # Saved from csv
+    else:
+        gameBoard = newBoard(col,row)
+    adjacents = adjacentFunc(row, col)
     cli_print(gameBoard, row, col)
 
     while win(gameBoard, col, row, player, nbPlayer, turn, playerList) == False:
@@ -174,7 +169,7 @@ def launchSolo(row, col, saved):
 if __name__ == '__main__':
     row = 4
     col = 4
-    nbPlayer = 2
+    nbPlayer = 1
     saved = False
     if nbPlayer >= 2:
         launch(col,row,nbPlayer, saved)
