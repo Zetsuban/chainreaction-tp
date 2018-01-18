@@ -29,7 +29,6 @@ def cli_print(board, row, col):
 				" ".join(str(box) for box in board[row_number - 1]))
 
 # Get the adjacents cell
-#def adjacentFunc(row, col, maxRow, maxCol): For non startup adjacents
 def adjacentFunc(maxRow, maxCol):
     adjacents = [[[] for j in repeat(None, maxCol)] for i in repeat(None, maxRow)]
     for row in range(maxRow):
@@ -45,7 +44,8 @@ def adjacentFunc(maxRow, maxCol):
                 adjacentTmp.remove([row, col + 1])
             adjacents[row][col] = adjacentTmp
     return adjacents
-    adjacents = [[[row, col],[row, col],[row, col],[row, col]],[[row, col],[row, col],[row, col],[row, col]]]
+    # adjacents will ressemble :
+    #[[[row, col],[row, col],[row, col],[row, col]],[[row, col],[row, col],[row, col],[row, col]]]
 
 # Main function for the game
 def put(gameBoard, col, row, selCol, selRow, player, adjacents):
@@ -113,16 +113,17 @@ def playerInput():
 ##############################
 
 # Main function that launches every other one
-def launch(col, row, nbPlayer, saved):
+def launch(row, col, nbPlayer, saved):
     playerList = []
     for i in range(1,nbPlayer+1):
         playerList.append(i)
     turn = 0
     player = 1
-    #writeSave= open('save.txt', 'w')
-    #readSave = open('save.txt', 'r')
     if saved == True:
-        gameBoard = readSave.read().split('\n') # Saved from csv
+        player = int(saves[0])
+        gameBoard = saves[5].split()
+        for i in range(len(gameBoard)):
+            gameBoard[i] = gameBoard[i].split(",")
     else:
         gameBoard = newBoard(col,row)
     adjacents = adjacentFunc(row, col)
@@ -140,7 +141,7 @@ def launch(col, row, nbPlayer, saved):
         turn += 1
         # for item in gameBoard:
         #     writeSave.write("%s\n" % item)
-    print("player", playerList[0], "wins")
+    winner = playerList[0]
 
 # Main function for solo play
 def launchSolo(row, col, saved):
@@ -149,7 +150,10 @@ def launchSolo(row, col, saved):
     turn = 0
     player = 1
     if saved == True:
-        gameBoard == board() # Saved from csv
+        player = int(saves[0])
+        gameBoard = saves[5].split()
+        for i in range(len(gameBoard)):
+            gameBoard[i] = gameBoard[i].split(",")
     else:
         gameBoard = newBoard(col,row)
     adjacents = adjacentFunc(row, col)
@@ -165,13 +169,37 @@ def launchSolo(row, col, saved):
         cli_print(gameBoard, row, col) #Test Print
         player = (player % 2) + 1
         turn += 1
+    winner = playerList[0]
+    print(winner)
+
+def continueGame():
+    saveFile = open('save.txt', 'r')
+    saves = saveFile.read().split('\n')
+    nbPlayer = int(saves[1])
+    row = int(saves[2])
+    col = int(saves[3])
+    solo = saves[4]
+    saveFile.close()
+    return saves, nbPlayer, row, col, solo
 
 if __name__ == '__main__':
+    solo = False
     row = 4
     col = 4
-    nbPlayer = 1
+    nbPlayer = 3
     saved = False
-    if nbPlayer >= 2:
-        launch(col,row,nbPlayer, saved)
+
+    try:
+        f = open('saved.txt')
+        f.close()
+    except FileNotFoundError:
+        print("File doesn't exist")
+        saved = False
+
+    if saved == True:
+        saves, nbPlayer, row, col, solo = continueGame()
+
+    if nbPlayer < 2 or solo == True:
+        launchSolo(col,row, saved)
     else:
-        launchSolo(row, col, saved)
+        launch(row, col, nbPlayer, saved)
