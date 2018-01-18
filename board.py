@@ -1,5 +1,6 @@
 import pygame
-import constants as c
+import constants	as c
+from algorithms		import *
 
 class board_c(pygame.sprite.Sprite):
 
@@ -11,6 +12,7 @@ class board_c(pygame.sprite.Sprite):
 		self.size			= size
 		self.nb_player		= nb_player
 		self.current_player	= 1
+		self.in_game_players	= [i for i in range(1, nb_player + 1)]
 		self.turn			= 1
 
 		self.image 			= pygame.Surface((	world.options["HEIGHT"],
@@ -18,16 +20,6 @@ class board_c(pygame.sprite.Sprite):
 		self.rect			= self.image.get_rect()
 		self.rect.centerx	= world.options["WIDTH"]  / 2
 		self.rect.centery	= world.options["HEIGHT"] / 2
-
-		# define if a chain reaction is producing
-		self.in_anim		= False
-		self.anim_tick		= 0
-
-        # list of tuple of futur changes in anim
-        # a list of all futur state in an anim
-        # a state contains a list of all box chaged
-        # box = ((posx, posy), player, nb_pawn)
-		self.change_list	= 0
 
 		# composed in such a way :
         # self.boxes[x][y] = [pygame.Rect, overed bool]
@@ -52,7 +44,9 @@ class board_c(pygame.sprite.Sprite):
 		mouse_pos	= pygame.mouse.get_pos()
 		changed		= False
 
+		x = 0
 		for i in self.boxes:
+			y = 0
 			for j in i:
 				j[0].left += (world.options["WIDTH"] - world.options["HEIGHT"]) / 2
 				if j[0].collidepoint(mouse_pos) and not j[1]:
@@ -61,54 +55,111 @@ class board_c(pygame.sprite.Sprite):
 				if j[1] and not j[0].collidepoint(mouse_pos):
 					j[1] = False
 					changed = True
-				if j[1] and world.click:
-					self.turn += 1
-					self.current_player = self.current_player % 8 + 1
+				if j[1] and world.click and \
+						(int(self.board[x][y][1]) == self.current_player or \
+						int(self.board[x][y][1]) == 0):
 					changed = True
-                    # check if possible move
-                    # set changed to True
-                    # add pawn
-                    # if chain reac set in_anim to True
-                    # get change list
+					self.board_update(x, y)
 				j[0].left -= (world.options["WIDTH"] - world.options["HEIGHT"]) / 2
+				y += 1
+			x += 1
 
-		# if self.in_anim:
-		# 	self.anim_tick += 1
-
-		if changed or self.in_anim:
+		if changed:
 			self.draw(world)
 
+	def board_update(self, x, y):
 
+		self.board[x][y] =	str(int(self.board[x][y][0]) + 1) + \
+							str(self.current_player)
+		recursive_put(self.board, self.size[1], self.size[0], y, x,
+				self.current_player)
+
+		self.turn += 1
+		self.current_player = self.current_player % self.nb_player + 1
 
 	def draw(self, world):
 
-		"""if in_anim and anim_tick % 30					\
-		update board										\
-		blit each box in self.boxes to self.image			\
-		draw WHITE lignes (1px width) over self.image		\
-		if self.change_list empty							\
-		self.anim = False & self.turn += 1"""
+		x = 0
 		for i in self.boxes :
+			y = 0
 			for j in i:
 				box_img = pygame.Surface((j[0].width, j[0].height))
-				box_img.fill(c.D_GRAY if j[1] else c.M_GRAY)
+				box_img.fill(c.M_GRAY if j[1] else c.D_GRAY)
+				if int(self.board[x][y][0]) == 1:
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 2), int(j[0].width / 2)),
+						int(j[0].width / 14))
+				elif int(self.board[x][y][0]) == 2:
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 4.3), int(j[0].width / 4.3)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width - j[0].width / 4.3),
+						int(j[0].width - j[0].width / 4.3)),
+						int(j[0].width / 14))
+				elif int(self.board[x][y][0]) == 3:
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 4.3), int(j[0].width / 4.3)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 2), int(j[0].width / 2)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width - j[0].width / 4.3),
+						int(j[0].width - j[0].width / 4.3)),
+						int(j[0].width / 14))
+				elif int(self.board[x][y][0]) == 4:
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 4.3), int(j[0].width / 4.3)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width - j[0].width / 4.3),
+						int(j[0].width - j[0].width / 4.3)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width - j[0].width / 4.3),
+						int(j[0].width / 4.3)),
+						int(j[0].width / 14))
+					pygame.draw.circle(	box_img,
+						c.COLOR_PLAYER[int(self.board[x][y][1]) - 1],
+						(int(j[0].width / 4.3),
+						int(j[0].width - j[0].width / 4.3)),
+						int(j[0].width / 14))
 				self.image.blit(box_img, j[0])
+				if j[1] and int(self.board[x][y][1]) != self.current_player \
+						and int(self.board[x][y][1]) > 0:
+					pygame.draw.aaline(self.image, c.RED, j[0].topleft,
+									j[0].bottomright, 3)
+					pygame.draw.aaline(self.image, c.RED, j[0].topright,
+									j[0].bottomleft, 3)
+				y += 1
+			x += 1
+
         # draw vertical sides of the boxes
 		for i in range(0, self.size[1]):
 			pygame.draw.line(self.image,
 							c.COLOR_PLAYER[self.current_player - 1],
 							self.boxes[0][i][0].topleft,
-							self.boxes[self.size[0] - 1][i][0].bottomleft, 5)
+							self.boxes[self.size[0] - 1][i][0].bottomleft, 3)
 		pygame.draw.line(self.image, c.COLOR_PLAYER[self.current_player - 1],
 			self.boxes[0][self.size[1] - 1][0].topright,
-			self.boxes[self.size[0] - 1][self.size[1] - 1][0].bottomright, 5)
+			self.boxes[self.size[0] - 1][self.size[1] - 1][0].bottomright, 3)
 
         # draw horizontal sides of the boxes
 		for i in range(0, self.size[0]):
 			pygame.draw.line(self.image,
 							c.COLOR_PLAYER[self.current_player - 1],
 							self.boxes[i][0][0].topleft,
-							self.boxes[i][self.size[1] - 1][0].topright, 5)
+							self.boxes[i][self.size[1] - 1][0].topright, 3)
 		pygame.draw.line(self.image, c.COLOR_PLAYER[self.current_player - 1],
 			self.boxes[self.size[0] - 1][0][0].bottomleft,
-			self.boxes[self.size[0] - 1][self.size[1] - 1][0].bottomright, 5)
+			self.boxes[self.size[0] - 1][self.size[1] - 1][0].bottomright, 3)

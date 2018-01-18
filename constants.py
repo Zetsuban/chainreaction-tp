@@ -12,6 +12,7 @@ L_GRAY		= (200, 200, 200)
 M_GRAY		= (128, 128, 128)
 D_GRAY		= ( 50,  50,  50)
 BLUE		= (  0,   0, 255)
+RED			= (255,   0,   0)
 MAGENTA		= (255,   0, 255)
 GREEN		= (  0, 255,   0)
 YELLOW		= (255, 255,   0)
@@ -138,10 +139,13 @@ DEFAULT = {
 "LANG"		: LANG_EN
 }
 
+<<<<<<< HEAD
 RESOLUTION = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
 
 
 
+=======
+>>>>>>> 786262024ec2e807cb875903e1ee060d252a18b7
 # limites for the number of player and dimension of the board
 GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))
 
