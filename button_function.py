@@ -54,7 +54,6 @@ def rules(world):
 		T_SMALL * (len(world.options["LANG"]["RULES"]) + 1) / 1.5))
 
 def save(world):
-
 	try:
 		f = open('chainreaction.sv')
 		f.close()

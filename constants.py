@@ -69,7 +69,7 @@ LANG_FR = {
 "M_TURN"		: "Tours  : ",
 "M_PLAYER"		: "Joueur : ",
 "B_BACK"		: "Retour",
-"B_NEW_GAME"	: "Nouvelle Parti",
+"B_NEW_GAME"	: "Nouvelle Partie",
 "B_CONTINUE"	: "Continuer",
 "B_RULES"		: "Règle",
 "B_CREDITS"		: "Crédit",
@@ -139,13 +139,8 @@ DEFAULT = {
 "LANG"		: LANG_EN
 }
 
-<<<<<<< HEAD
 RESOLUTION = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
 
-
-
-=======
->>>>>>> 786262024ec2e807cb875903e1ee060d252a18b7
 # limites for the number of player and dimension of the board
 GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))
 

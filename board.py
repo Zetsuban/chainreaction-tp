@@ -14,6 +14,7 @@ class board_c(pygame.sprite.Sprite):
 		self.current_player	= 1
 		self.in_game_players	= [i for i in range(1, nb_player + 1)]
 		self.turn			= 1
+		self.solo			= False
 
 		self.image 			= pygame.Surface((	world.options["HEIGHT"],
 												world.options["HEIGHT"]))
@@ -66,6 +67,13 @@ class board_c(pygame.sprite.Sprite):
 
 		if changed:
 			self.draw(world)
+
+		world.player	= self.current_player
+		world.nbPlayer 	= self.nb_player
+		world.row		= self.size[0]
+		world.col		= self.size[1]
+		world.solo		= self.solo
+		world.turn		= self.turn
 
 	def board_update(self, x, y):
 

@@ -26,10 +26,11 @@ def cli_print(board, row, col):
 # Config File
 def configFunc():
 	okay = False
+	OPTION = {}
 	try:
-		f = open('config.cfg')
+		f = open('config.cfg', 'r')
 		conf = f.read().split('\n')
-		if (conf[2] == "1" or conf[2] == "2") and (RESOLUTION.count([int(conf[0]), int(conf[1])]) == 1):
+		if (conf[2] == "LANG_FR" or conf[2] == "LANG_EN") and (RESOLUTION.count([int(conf[0]), int(conf[1])]) == 1):
 			OPTION = {"HEIGHT" : int(conf[1]),"WIDTH" : int(conf[0]),"LANG" : eval(conf[2])}
 		f.close()
 		okay = True
@@ -47,7 +48,7 @@ def configFunc():
 
 def main():
 	options = configFunc()
-    save = loadSaved()
+	save = loadSave()
 
 	game = game_c(options, save)
 	game.world_loop()

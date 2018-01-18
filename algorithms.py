@@ -95,42 +95,42 @@ def playerInput():
 ##############################
 
 # Main function that launches every other one
-def launch(row, col, nbPlayer, saved):
-    playerList = [j for j in range(1,nbPlayer+1)]
-    solo = False
-    turn = 0
-    player = 1
-    gameBoard = newBoard(col,row)
-
-    if saves != None:
-        player = int(saves[0])
-        nbPlayer = int(saves[1])
-        row = int(saves[2])
-        col = int(saves[3])
-        solo = saves[4]
-        turn = int(saves[6])
-        gameBoard = saves[5].split()
-        for i in range(len(gameBoard)):
-            gameBoard[i] = gameBoard[i].split(",")
-
-    adjacents = adjacentFunc(row, col)
-    cli_print(gameBoard, row, col)
-
-    while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
-        if loose(gameBoard, col, row, player, turn, nbPlayer) == True:
-            player += 1
-        if player > nbPlayer:
-            player = playerList[0]
-        print("\nPlayer", player, "it's your turn")
-        selCol, selRow = playerInput() # Tes Input
-        put(gameBoard, col, row, selCol, selRow, player, adjacents)
-        print("\n")
-        cli_print(gameBoard, row, col) #Test Print
-        player = player % nbPlayer + 1
-        turn += 1
-        # for item in gameBoard:
-        #     writeSave.write("%s\n" % item)
-    winner = playerList[0]
+# def launch(row, col, nbPlayer, saved):
+#     playerList = [j for j in range(1,nbPlayer+1)]
+#     solo = False
+#     turn = 0
+#     player = 1
+#     gameBoard = newBoard(col,row)
+#
+#     if saves != None:
+#         player = int(saves[0])
+#         nbPlayer = int(saves[1])
+#         row = int(saves[2])
+#         col = int(saves[3])
+#         solo = saves[4]
+#         turn = int(saves[6])
+#         gameBoard = saves[5].split()
+#         for i in range(len(gameBoard)):
+#             gameBoard[i] = gameBoard[i].split(",")
+#
+#     adjacents = adjacentFunc(row, col)
+#     cli_print(gameBoard, row, col)
+#
+#     while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
+#         if loose(gameBoard, col, row, player, turn, nbPlayer) == True:
+#             player += 1
+#         if player > nbPlayer:
+#             player = playerList[0]
+#         print("\nPlayer", player, "it's your turn")
+#         selCol, selRow = playerInput() # Tes Input
+#         put(gameBoard, col, row, selCol, selRow, player, adjacents)
+#         print("\n")
+#         cli_print(gameBoard, row, col) #Test Print
+#         player = player % nbPlayer + 1
+#         turn += 1
+#         # for item in gameBoard:
+#         #     writeSave.write("%s\n" % item)
+#     winner = playerList[0]
 
 # Main function for solo play
 def launchSolo(row, col, saved):
@@ -178,13 +178,6 @@ def loadSave():
         return None
     if loaded == True:
         return saves
-
-def loadSaved():
-        f.close()
-        loaded = None
-    except FileNotFoundError:
-        print("File doesn't exist")
-
 
 
 if __name__ == '__main__':
