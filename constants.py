@@ -138,6 +138,17 @@ DEFAULT = {
 "LANG"		: LANG_EN
 }
 
+try:
+	f = open('config.cfg')
+	conf = f.read().split('\n')
+	if conf[2] == "LANG_FR" or conf[2] == "LANG_EN":
+		OPTION = {"HEIGHT" : int(conf[0]),"WIDTH" : int(conf[1]),"LANG" : eval(conf[2])}
+	f.close()
+	return OPTION
+except FileNotFoundError:
+	with open('test.txt', 'w') as f:
+		f.writelines(str(DEFAULT["HEIGHT"])+"\n"+str(DEFAULT["WIDTH"])+"\n"+str(DEFAULT["LANG"]))
+
 # limites for the number of player and dimension of the board
 GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))
 

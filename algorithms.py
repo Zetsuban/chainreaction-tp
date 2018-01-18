@@ -114,13 +114,12 @@ def playerInput():
 
 # Main function that launches every other one
 def launch(row, col, nbPlayer, saved):
-    playerList = []
-    for i in range(1,nbPlayer+1):
-        playerList.append(i)
+    playerList = [j for j in range(1,nbPlayer+1)]
     turn = 0
     player = 1
     if saved == True:
         player = int(saves[0])
+        turn = int(saves[6])
         gameBoard = saves[5].split()
         for i in range(len(gameBoard)):
             gameBoard[i] = gameBoard[i].split(",")
@@ -132,6 +131,8 @@ def launch(row, col, nbPlayer, saved):
     while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         if loose(gameBoard, col, row, player, turn, nbPlayer) == True:
             player += 1
+        if player > nbPlayer:
+            player = playerList[0]
         print("\nPlayer", player, "it's your turn")
         selCol, selRow = playerInput() # Tes Input
         put(gameBoard, col, row, selCol, selRow, player, adjacents)
@@ -151,6 +152,7 @@ def launchSolo(row, col, saved):
     player = 1
     if saved == True:
         player = int(saves[0])
+        turn = int(saves[6])
         gameBoard = saves[5].split()
         for i in range(len(gameBoard)):
             gameBoard[i] = gameBoard[i].split(",")
@@ -159,7 +161,7 @@ def launchSolo(row, col, saved):
     adjacents = adjacentFunc(row, col)
     cli_print(gameBoard, row, col)
 
-    while win(gameBoard, col, row, player, nbPlayer, turn, playerList) == False:
+    while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         if player == 2:
             selRow, selCol = ia(gameBoard, row, col, player)
         else:
@@ -170,10 +172,9 @@ def launchSolo(row, col, saved):
         player = (player % 2) + 1
         turn += 1
     winner = playerList[0]
-    print(winner)
 
 def continueGame():
-    saveFile = open('save.txt', 'r')
+    saveFile = open('save.cfg', 'r')
     saves = saveFile.read().split('\n')
     nbPlayer = int(saves[1])
     row = int(saves[2])
@@ -187,10 +188,10 @@ if __name__ == '__main__':
     row = 4
     col = 4
     nbPlayer = 3
-    saved = False
+    saved = True
 
     try:
-        f = open('saved.txt')
+        f = open('save.cfg')
         f.close()
     except FileNotFoundError:
         print("File doesn't exist")
