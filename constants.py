@@ -138,18 +138,9 @@ DEFAULT = {
 "LANG"		: LANG_EN
 }
 
-resolution = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
+RESOLUTION = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
 
-try:
-	f = open('config.cfg')
-	conf = f.read().split('\n')
-	if (conf[2] == "1" or conf[2] == "2") and (resolution.count([int(conf[0]), int(conf[1])]) == 1):
-		OPTION = {"HEIGHT" : int(conf[1]),"WIDTH" : int(conf[0]),"LANG" : eval(conf[2])}
-	f.close()
-	#return OPTION
-except FileNotFoundError:
-	with open('test.txt', 'w') as f:
-		f.writelines(str(DEFAULT["HEIGHT"])+"\n"+str(DEFAULT["WIDTH"])+"\n"+str(DEFAULT["LANG"]))
+
 
 # limites for the number of player and dimension of the board
 GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))

@@ -115,16 +115,22 @@ def playerInput():
 # Main function that launches every other one
 def launch(row, col, nbPlayer, saved):
     playerList = [j for j in range(1,nbPlayer+1)]
+    solo = False
     turn = 0
     player = 1
-    if saved == True:
+    gameBoard = newBoard(col,row)
+
+    if saves != None:
         player = int(saves[0])
+        nbPlayer = int(saves[1])
+        row = int(saves[2])
+        col = int(saves[3])
+        solo = saves[4]
         turn = int(saves[6])
         gameBoard = saves[5].split()
         for i in range(len(gameBoard)):
             gameBoard[i] = gameBoard[i].split(",")
-    else:
-        gameBoard = newBoard(col,row)
+
     adjacents = adjacentFunc(row, col)
     cli_print(gameBoard, row, col)
 
@@ -147,17 +153,23 @@ def launch(row, col, nbPlayer, saved):
 # Main function for solo play
 def launchSolo(row, col, saved):
     playerList = [1,2]
+    solo = True
     nbPlayer = 2
     turn = 0
     player = 1
-    if saved == True:
+    gameBoard = newBoard(col,row)
+
+    if saves != None:
         player = int(saves[0])
+        nbPlayer = int(saves[1])
+        row = int(saves[2])
+        col = int(saves[3])
+        solo = saves[4]
         turn = int(saves[6])
         gameBoard = saves[5].split()
         for i in range(len(gameBoard)):
             gameBoard[i] = gameBoard[i].split(",")
-    else:
-        gameBoard = newBoard(col,row)
+
     adjacents = adjacentFunc(row, col)
     cli_print(gameBoard, row, col)
 
@@ -173,15 +185,25 @@ def launchSolo(row, col, saved):
         turn += 1
     winner = playerList[0]
 
-def continueGame():
-    saveFile = open('save.cfg', 'r')
-    saves = saveFile.read().split('\n')
-    nbPlayer = int(saves[1])
-    row = int(saves[2])
-    col = int(saves[3])
-    solo = saves[4]
-    saveFile.close()
-    return saves, nbPlayer, row, col, solo
+def loadSave():
+    loaded = False
+    try:
+        saveFile = open('chainreaction.sv', 'r')
+        saves = saveFile.read().split('\n')
+        saveFile.close()
+        loaded = True
+    except FileNotFoundError:
+        return None
+    if loaded == True:
+        return saves
+
+def loadSaved():
+        f.close()
+        loaded = None
+    except FileNotFoundError:
+        print("File doesn't exist")
+
+
 
 if __name__ == '__main__':
     solo = False
@@ -190,12 +212,7 @@ if __name__ == '__main__':
     nbPlayer = 3
     saved = True
 
-    try:
-        f = open('save.cfg')
-        f.close()
-    except FileNotFoundError:
-        print("File doesn't exist")
-        saved = False
+
 
     if saved == True:
         saves, nbPlayer, row, col, solo = continueGame()

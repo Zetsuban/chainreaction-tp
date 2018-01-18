@@ -20,6 +20,14 @@ class game_c():
 		self.background = pygame.Surface(self.screen.get_size())
 		self.background.fill(BLACK)
 		main_menu(self)
+		# Save Variables
+		self.player		= None
+		self.nbPlayer 	= None
+		self.row		= None
+		self.col		= None
+		self.solo		= None
+		self.turn		= None
+
 
 	def event_loop(self):
 		for event in pygame.event.get():
