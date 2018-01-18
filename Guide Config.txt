@@ -1,0 +1,18 @@
+save.cfg = [
+current player : De 1 à 8
+nbPlayer : De 2 à 8
+row_number
+col_number
+solo : True or False
+board
+turn
+]
+
+Possible resolutions are :
+1280x720; 1360x768; 1600x900; 1920x1080; 2560x1440; 3840x2160
+
+config.cfg = [
+resolution WIDTH
+resolution HEIGHT
+language : LANG_FR ou LANG_EN
+]

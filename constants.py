@@ -138,13 +138,15 @@ DEFAULT = {
 "LANG"		: LANG_EN
 }
 
+resolution = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
+
 try:
 	f = open('config.cfg')
 	conf = f.read().split('\n')
-	if conf[2] == "LANG_FR" or conf[2] == "LANG_EN":
-		OPTION = {"HEIGHT" : int(conf[0]),"WIDTH" : int(conf[1]),"LANG" : eval(conf[2])}
+	if (conf[2] == "1" or conf[2] == "2") and (resolution.count([int(conf[0]), int(conf[1])]) == 1):
+		OPTION = {"HEIGHT" : int(conf[1]),"WIDTH" : int(conf[0]),"LANG" : eval(conf[2])}
 	f.close()
-	return OPTION
+	#return OPTION
 except FileNotFoundError:
 	with open('test.txt', 'w') as f:
 		f.writelines(str(DEFAULT["HEIGHT"])+"\n"+str(DEFAULT["WIDTH"])+"\n"+str(DEFAULT["LANG"]))
