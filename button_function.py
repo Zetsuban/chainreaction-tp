@@ -54,7 +54,13 @@ def rules(world):
 		T_SMALL * (len(world.options["LANG"]["RULES"]) + 1) / 1.5))
 
 def save(world):
-	pass
+	try:
+		f = open('chainreaction.sv')
+		f.close()
+	except FileNotFoundError:
+		with open('chainreaction.sv', 'w') as f:
+			f.writelines(world.player + "\n" + world.nbPlayer + "\n" + world.row + "\n" + world.col + "\n" + world.solo + "\n" + world.board + "\n" + world.turn)
+
 
 def save_and_back(world):
 	save(world)

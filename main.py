@@ -4,6 +4,7 @@ from pygame.locals import *
 
 from world		import *
 from constants	import *
+from algorithms import *
 
 # display board in such a fashion
 # |       1  2  3  4  5 20
@@ -23,16 +24,34 @@ def cli_print(board, row, col):
 		row_number, ":",
 				" ".join(box for box in board[row_number - 1]))
 
+# Config File
+def loadConfig():
+	okay = False
+	OPTION = {}
+	try:
+		f = open('config.cfg', 'r')
+		conf = f.read().split('\n')
+		if (conf[2] == "LANG_FR" or conf[2] == "LANG_EN") and (RESOLUTION.count([int(conf[0]), int(conf[1])]) == 1):
+			OPTION = {"HEIGHT" : int(conf[1]),"WIDTH" : int(conf[0]),"LANG" : eval(conf[2])}
+		f.close()
+		okay = True
+	except FileNotFoundError:
+		with open('test.txt', 'w') as f:
+			f.writelines(str(DEFAULT["HEIGHT"])+"\n"+str(DEFAULT["WIDTH"])+"\n"+str(DEFAULT["LANG"]))
+
+	return(OPTION if okay else DEFAULT)
+
+
+
 #
 # main
 #
 
 def main():
+	options = loadConfig()
+	save = loadSave()
 
-    # load_cfg()
-    # save = load_save()
-
-	game = game_c(DEFAULT)
+	game = game_c(options, save)
 	game.world_loop()
 
 if __name__ == '__main__':

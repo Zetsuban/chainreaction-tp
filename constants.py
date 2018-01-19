@@ -69,7 +69,7 @@ LANG_FR = {
 "M_TURN"		: "Tours  : ",
 "M_PLAYER"		: "Joueur : ",
 "B_BACK"		: "Retour",
-"B_NEW_GAME"	: "Nouvelle Parti",
+"B_NEW_GAME"	: "Nouvelle Partie",
 "B_CONTINUE"	: "Continuer",
 "B_RULES"		: "Règle",
 "B_CREDITS"		: "Crédit",
@@ -138,6 +138,8 @@ DEFAULT = {
 "WIDTH"		: 1280,
 "LANG"		: LANG_EN
 }
+
+RESOLUTION = [[1280, 720], [1360, 768], [1600, 900], [1920, 1080], [2560, 1440], [3840, 2160]]
 
 # limites for the number of player and dimension of the board
 GAME_SETTINGS_LIMITE = ((1, 8), (4, 20), (4, 20))

@@ -15,6 +15,7 @@ class board_c(pygame.sprite.Sprite):
 		self.current_player	= 1
 		self.in_game_players	= [i for i in range(1, self.nb_player + 1)]
 		self.turn			= 1
+		self.solo			= False
 
 		self.image 			= pygame.Surface((	world.options["HEIGHT"],
 												world.options["HEIGHT"]))
@@ -68,12 +69,24 @@ class board_c(pygame.sprite.Sprite):
 		if changed:
 			self.draw(world)
 
+		for i in range(1, self.nb_player + 1):
+			if loose(self.board, self.size[1], self.size[0], self.current_player, self.turn, self.nb_player) == True:
+				if self.in_game_players.count(i) > 0:
+					self.in_game_players.remove(i)
+
+		world.player	= self.current_player
+		world.nbPlayer 	= self.nb_player
+		world.row		= self.size[0]
+		world.col		= self.size[1]
+		world.solo		= self.solo
+		world.turn		= self.turn
+
 	def board_update(self, x, y):
 
 		self.board[x][y] =	str(int(self.board[x][y][0]) + 1) + \
 							str(self.current_player)
 		recursive_put(self.board, self.size[1], self.size[0], y, x,
-				self.current_player)
+				self.current_player, self.in_game_players)
 
 		self.turn += 1
 		self.current_player = self.current_player % self.nb_player + 1
