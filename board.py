@@ -10,9 +10,10 @@ class board_c(pygame.sprite.Sprite):
 
 		self.board			= save
 		self.size			= size
-		self.nb_player		= nb_player
+		self.nb_player		= nb_player if nb_player > 1 else 2
+		self.solo			= True if nb_player == 1 else 2
 		self.current_player	= 1
-		self.in_game_players	= [i for i in range(1, nb_player + 1)]
+		self.in_game_players	= [i for i in range(1, self.nb_player + 1)]
 		self.turn			= 1
 
 		self.image 			= pygame.Surface((	world.options["HEIGHT"],
