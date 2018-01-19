@@ -5,6 +5,7 @@ from pygame.locals import *
 from world		import *
 from constants	import *
 from algorithms import *
+
 # display board in such a fashion
 # |       1  2  3  4  5 20
 # |    -------------------
@@ -24,7 +25,7 @@ def cli_print(board, row, col):
 				" ".join(box for box in board[row_number - 1]))
 
 # Config File
-def configFunc():
+def loadConfig():
 	okay = False
 	OPTION = {}
 	try:
@@ -47,7 +48,7 @@ def configFunc():
 #
 
 def main():
-	options = configFunc()
+	options = loadConfig()
 	save = loadSave()
 
 	game = game_c(options, save)

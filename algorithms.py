@@ -16,17 +16,19 @@ def possible(gameBoard, col, row, selCol, selRow, player):
     if gameBoard[selRow][selCol][1] == "0" or gameBoard[selRow][selCol][0] == str(player):
         return True
     return False
+
+
 # This function isn't used since the verification is made in the graphical part but I still let it here since it was asked
 
-# Test Print in console for test purpose
-def cli_print(board, row, col):
-	print(" " * 6, ("  " if int(len(str(col))) == 1 else "  ").\
-		join(str(col_number) for col_number in range(1, col + 1)))
-	print(" " * 4, "-" * (col * 3))
-	for row_number in range(1, row + 1):
-		print((" " if int(len(str(row_number))) == 1 else ""),
-		row_number, ":",
-				" ".join(str(box) for box in board[row_number - 1]))
+# # Test Print in console for test purpose
+# def cli_print(board, row, col):
+# 	print(" " * 6, ("  " if int(len(str(col))) == 1 else "  ").\
+# 		join(str(col_number) for col_number in range(1, col + 1)))
+# 	print(" " * 4, "-" * (col * 3))
+# 	for row_number in range(1, row + 1):
+# 		print((" " if int(len(str(row_number))) == 1 else ""),
+# 		row_number, ":",
+# 				" ".join(str(box) for box in board[row_number - 1]))
 
 # Get the adjacents cell
 def adjacentFunc(maxRow, maxCol):
@@ -46,7 +48,7 @@ def adjacentFunc(maxRow, maxCol):
     return(adjacents)
 
 # Main function for the game
-def recursive_put(board, col, row, selCol, selRow, player, adjacent = None):
+def recursive_put(board, col, row, selCol, selRow, player, playerList, adjacent = None):
 
 	if adjacent == None:
 		adjacent = adjacentFunc(row, col)
@@ -56,8 +58,11 @@ def recursive_put(board, col, row, selCol, selRow, player, adjacent = None):
 		for i in adjacent[selRow][selCol]:
 			board[i[0]][i[1]] = str(int(board[i[0]][i[1]][0]) + 1) + str(player)
 		for i in adjacent[selRow][selCol]:
+			if len(playerList) > 1:
+				quit()
+				return "stop"
 			if int(board[i[0]][i[1]][0]) >= len(adjacent[i[0]][i[1]]):
-				recursive_put(board, col, row, i[1], i[0], player, adjacent)
+				recursive_put(board, col, row, i[1], i[0], player, playerList, adjacent)
 
 def ia(gameBoard, row, col, player):
     selRow = randint(0, row - 1)
@@ -87,12 +92,12 @@ def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         return False
     return True
 
-#Tmp function for test purpose
-def playerInput():
-    selRow = int(input("Ligne : ")) - 1
-    selCol = int(input("Colonne : ")) - 1
-    return selCol, selRow
-##############################
+# #Tmp function for test purpose
+# def playerInput():
+#     selRow = int(input("Ligne : ")) - 1
+#     selCol = int(input("Colonne : ")) - 1
+#     return selCol, selRow
+# ##############################
 
 # Main function that launches every other one
 # def launch(row, col, nbPlayer, saved):
