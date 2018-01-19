@@ -56,10 +56,10 @@ def rules(world):
 def save(world):
 
 	try:
-		f = open('chainreaction.sv')
+		f = open('chainreaction.save')
 		f.close()
 	except FileNotFoundError:
-		with open('chainreaction.sv', 'w') as f:
+		with open('chainreaction.save', 'w') as f:
 			f.writelines(world.player + "\n" + world.nbPlayer + "\n" + world.row + "\n" + world.col + "\n" + world.solo + "\n" + world.board + "\n" + world.turn)
 
 

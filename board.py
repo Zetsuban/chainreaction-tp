@@ -78,7 +78,18 @@ class board_c(pygame.sprite.Sprite):
 		if changed:
 			self.draw(world)
 
+<<<<<<< HEAD
 	def board_update(self, x, y, world):
+=======
+		world.player	= self.current_player
+		world.nbPlayer 	= self.nb_player
+		world.row		= self.size[0]
+		world.col		= self.size[1]
+		world.solo		= self.solo
+		world.turn		= self.turn
+
+	def board_update(self, x, y):
+>>>>>>> 508bfc45249a76d19ef06a0a6251356718440282
 
 		self.board[x][y] =	str(int(self.board[x][y][0]) + 1) + \
 							str(self.current_player)
