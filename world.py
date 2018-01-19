@@ -1,8 +1,10 @@
 import pygame
-from button_function import *
 from pygame.locals import *
+import button_function as bf
+from constants import *
 
 class game_c():
+
 
 	def __init__(self, options, save = None):
 
@@ -13,13 +15,15 @@ class game_c():
 		self.click		= False
 		self.running	= True
 		self.save		= save
-        # self.game_set = [nb_player, nb_row, nb_col]
+		self.winner		= None
+
+		# self.game_set = [nb_player, nb_row, nb_col]
 		self.game_set	= [2, 4, 4]
 		self.board		= None
 		self.all_object	= None
 		self.background = pygame.Surface(self.screen.get_size())
 		self.background.fill(BLACK)
-		main_menu(self)
+
 		# Save Variables
 		self.player		= None
 		self.nbPlayer 	= None
@@ -38,6 +42,7 @@ class game_c():
 
 
 	def world_loop(self):
+		bf.main_menu(self)
 		while self.running:
 			self.screen.blit(self.background, (0, 0))
 			self.event_loop()

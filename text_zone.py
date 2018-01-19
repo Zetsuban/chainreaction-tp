@@ -3,7 +3,7 @@ import pygame
 class text_zone_c(pygame.sprite.Sprite):
 
 	def __init__(self, text, color, size, x, y, align = "left",
-					pos_type = "center"):
+				pos_type = "center"):
 
 		super().__init__()
 
