@@ -92,14 +92,14 @@ def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         return False
     return True
 
-# #Tmp function for test purpose
+# #Tmp function for terminal play
 # def playerInput():
 #     selRow = int(input("Ligne : ")) - 1
 #     selCol = int(input("Colonne : ")) - 1
 #     return selCol, selRow
 # ##############################
 
-# Main function that launches every other one
+# Main function for terminal play
 # def launch(row, col, nbPlayer, saved):
 #     playerList = [j for j in range(1,nbPlayer+1)]
 #     solo = False
@@ -175,15 +175,15 @@ def launchSolo(row, col, saved):
 def loadSave():
     loaded = False
     try:
-        saveFile = open('chainreaction.sv', 'r')
+        saveFile = open('chainreaction.save', 'r')
         saves = saveFile.read().split('\n')
         saveFile.close()
         loaded = True
     except FileNotFoundError:
-        return None
+        print("File not found")
     if loaded == True:
         return saves
-
+	return None
 
 if __name__ == '__main__':
     solo = False

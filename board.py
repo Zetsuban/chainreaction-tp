@@ -68,10 +68,11 @@ class board_c(pygame.sprite.Sprite):
 		if changed:
 			self.draw(world)
 
-		for i in range(1, self.nb_player + 1):
-			if loose(self.board, self.size[1], self.size[0], self.current_player, self.turn, self.nb_player) == True:
-				if self.in_game_players.count(i) > 0:
-					self.in_game_players.remove(i)
+		for j in range()
+				for i in range(1, self.nb_player + 1):
+					if self.board[].count():
+						if self.in_game_players.count(i) > 0:
+							self.in_game_players.remove(i)
 
 		world.player	= self.current_player
 		world.nbPlayer 	= self.nb_player
