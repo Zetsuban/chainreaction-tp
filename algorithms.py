@@ -173,31 +173,31 @@ def launchSolo(row, col, saved):
     winner = playerList[0]
 
 def loadSave():
-    loaded = False
-    try:
-        saveFile = open('chainreaction.save', 'r')
-        saves = saveFile.read().split('\n')
-        saveFile.close()
-        loaded = True
-    except FileNotFoundError:
-        print("File not found")
-    if loaded == True:
-        return saves
+	loaded = False
+	try:
+		saveFile = open('chainreaction.save', 'r')
+		saves = saveFile.read().split('\n')
+		saveFile.close()
+		loaded = True
+	except FileNotFoundError:
+		print("File not found")
+	if loaded == True:
+		return saves
 	return None
 
-if __name__ == '__main__':
-    solo = False
-    row = 4
-    col = 4
-    nbPlayer = 3
-    saved = True
-
-
-
-    if saved == True:
-        saves, nbPlayer, row, col, solo = continueGame()
-
-    if nbPlayer < 2 or solo == True:
-        launchSolo(col,row, saved)
-    else:
-        launch(row, col, nbPlayer, saved)
+# if __name__ == '__main__':
+#     solo = False
+#     row = 4
+#     col = 4
+#     nbPlayer = 3
+#     saved = True
+#
+#
+#
+#     if saved == True:
+#         saves, nbPlayer, row, col, solo = continueGame()
+#
+#     if nbPlayer < 2 or solo == True:
+#         launchSolo(col,row, saved)
+#     else:
+#         launch(row, col, nbPlayer, saved)
