@@ -81,39 +81,12 @@ def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
 def loadSave():
 	loaded = False
 	try:
-<<<<<<< HEAD
-		saveFile = open('chainreaction.save', 'r')
-=======
+
 		saveFile = open('chainreaction.sv', 'r')
->>>>>>> cdaa3e8f46019894f097d1c61204306cb8efe096
 		saves = saveFile.read().split('\n')
 		saveFile.close()
 		loaded = True
 	except FileNotFoundError:
-<<<<<<< HEAD
-		print("File not found")
-	if loaded == True:
-		return saves
-	return None
-
-# if __name__ == '__main__':
-#     solo = False
-#     row = 4
-#     col = 4
-#     nbPlayer = 3
-#     saved = True
-#
-#
-#
-#     if saved == True:
-#         saves, nbPlayer, row, col, solo = continueGame()
-#
-#     if nbPlayer < 2 or solo == True:
-#         launchSolo(col,row, saved)
-#     else:
-#         launch(row, col, nbPlayer, saved)
-=======
 		return None
 	if loaded == True:
 		return saves
->>>>>>> cdaa3e8f46019894f097d1c61204306cb8efe096
