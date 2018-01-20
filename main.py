@@ -24,7 +24,6 @@ def cli_print(board, row, col):
 		row_number, ":",
 				" ".join(box for box in board[row_number - 1]))
 
-# Config File
 def loadConfig():
 	okay = False
 	OPTION = {}
@@ -40,12 +39,6 @@ def loadConfig():
 			f.writelines(str(DEFAULT["HEIGHT"])+"\n"+str(DEFAULT["WIDTH"])+"\n"+str(DEFAULT["LANG"]))
 
 	return(OPTION if okay else DEFAULT)
-
-
-
-#
-# main
-#
 
 def main():
 	options = loadConfig()

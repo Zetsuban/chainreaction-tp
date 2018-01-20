@@ -54,6 +54,7 @@ def rules(world):
 		T_SMALL * (len(world.options["LANG"]["RULES"]) + 1) / 1.5))
 
 def save(world):
+
 	try:
 		f = open('chainreaction.save')
 		f.close()
@@ -63,6 +64,7 @@ def save(world):
 
 
 def save_and_back(world):
+
 	save(world)
 	main_menu(world)
 
@@ -103,25 +105,38 @@ def start_game(world):
 		world.options["HEIGHT"] - T_MEDIUM,
 		"top_left"))
 	world.all_object.add(var_text_c("TURN" , T_MEDIUM, BLUE,
-						world.options["LANG"]["M_" + "TURN"], 0, 0))
+						world.options["LANG"]["M_TURN"], 0, 0))
 	world.all_object.add(var_text_c("PLAYER" , T_MEDIUM, BLUE,
-						world.options["LANG"]["M_" + "PLAYER"], T_MEDIUM, 0))
+						world.options["LANG"]["M_PLAYER"], T_MEDIUM, 0))
 	world.all_object.add(board_c(world,
 								newBoard(world.game_set[1], world.game_set[2]),
 								(world.game_set[1], world.game_set[2]),
 								world.game_set[0]))
-
-
 
 # dummy function for the 'continue' button when no previous save is loaded
 def dummy(world):
 	pass
 
 def end_game_screen(world):
-    # add result text
-    # add play again button
-	# add back button
-	print("end_game_screen")
+
+	if world.all_object:
+		world.all_object.clear(world.screen, world.background)
+		world.all_object.empty()
+	else:
+		world.all_object = pygame.sprite.Group()
+
+	screen_center_x = world.options["WIDTH"] / 2
+	screen_center_y = world.options["HEIGHT"] / 2
+
+	world.all_object.add(var_text_c("WINNER" , T_MEDIUM, BLUE,
+						world.options["LANG"]["M_WINNER"],
+						screen_center_x, screen_center_y, "center"))
+	world.all_object.add(button_c(world.options["LANG"]["B_AGAIN"], BLUE,
+		T_MEDIUM, "AGAIN", screen_center_x, screen_center_y + T_MEDIUM,
+		"center"))
+	world.all_object.add(button_c(world.options["LANG"]["B_EXIT"], BLUE,
+		T_MEDIUM, "EXIT", screen_center_x, screen_center_y + (T_MEDIUM * 2),
+		"center"))
 
 def exit(world):
 	world.running = False

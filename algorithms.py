@@ -2,7 +2,7 @@ from random import randint
 from itertools import repeat
 
 # Create the board at the start of the game
-def newBoard(col, row):
+def newBoard(row, col):
     gameBoard = []
     for i in range(row):
         boardRow = []
@@ -16,19 +16,6 @@ def possible(gameBoard, col, row, selCol, selRow, player):
     if gameBoard[selRow][selCol][1] == "0" or gameBoard[selRow][selCol][0] == str(player):
         return True
     return False
-
-
-# This function isn't used since the verification is made in the graphical part but I still let it here since it was asked
-
-# # Test Print in console for test purpose
-# def cli_print(board, row, col):
-# 	print(" " * 6, ("  " if int(len(str(col))) == 1 else "  ").\
-# 		join(str(col_number) for col_number in range(1, col + 1)))
-# 	print(" " * 4, "-" * (col * 3))
-# 	for row_number in range(1, row + 1):
-# 		print((" " if int(len(str(row_number))) == 1 else ""),
-# 		row_number, ":",
-# 				" ".join(str(box) for box in board[row_number - 1]))
 
 # Get the adjacents cell
 def adjacentFunc(maxRow, maxCol):
@@ -58,11 +45,10 @@ def recursive_put(board, col, row, selCol, selRow, player, playerList, adjacent 
 		for i in adjacent[selRow][selCol]:
 			board[i[0]][i[1]] = str(int(board[i[0]][i[1]][0]) + 1) + str(player)
 		for i in adjacent[selRow][selCol]:
-			if len(playerList) > 1:
-				quit()
-				return "stop"
 			if int(board[i[0]][i[1]][0]) >= len(adjacent[i[0]][i[1]]):
-				recursive_put(board, col, row, i[1], i[0], player, playerList, adjacent)
+				return(recursive_put(board, col, row, i[1], i[0], player, playerList, adjacent))
+			# if len(playerList) < 1:
+			# 	return("stop")
 
 def ia(gameBoard, row, col, player):
     selRow = randint(0, row - 1)
@@ -77,8 +63,8 @@ def loose(gameBoard, col, row, player, turn ,nbPlayer):
     inGame = []
     for i in range(row):
         for j in range(col):
-            inGame.append(gameBoard[i][j][0])
-    if inGame.count(str(player)) == 0 and turn >= nbPlayer:
+            inGame.append(gameBoard[i][j][1])
+    if inGame.count(str(player)) == 0 and turn > nbPlayer:
         return True
     return False
 
@@ -92,94 +78,19 @@ def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
         return False
     return True
 
-# #Tmp function for terminal play
-# def playerInput():
-#     selRow = int(input("Ligne : ")) - 1
-#     selCol = int(input("Colonne : ")) - 1
-#     return selCol, selRow
-# ##############################
-
-# Main function for terminal play
-# def launch(row, col, nbPlayer, saved):
-#     playerList = [j for j in range(1,nbPlayer+1)]
-#     solo = False
-#     turn = 0
-#     player = 1
-#     gameBoard = newBoard(col,row)
-#
-#     if saves != None:
-#         player = int(saves[0])
-#         nbPlayer = int(saves[1])
-#         row = int(saves[2])
-#         col = int(saves[3])
-#         solo = saves[4]
-#         turn = int(saves[6])
-#         gameBoard = saves[5].split()
-#         for i in range(len(gameBoard)):
-#             gameBoard[i] = gameBoard[i].split(",")
-#
-#     adjacents = adjacentFunc(row, col)
-#     cli_print(gameBoard, row, col)
-#
-#     while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
-#         if loose(gameBoard, col, row, player, turn, nbPlayer) == True:
-#             player += 1
-#         if player > nbPlayer:
-#             player = playerList[0]
-#         print("\nPlayer", player, "it's your turn")
-#         selCol, selRow = playerInput() # Tes Input
-#         put(gameBoard, col, row, selCol, selRow, player, adjacents)
-#         print("\n")
-#         cli_print(gameBoard, row, col) #Test Print
-#         player = player % nbPlayer + 1
-#         turn += 1
-#         # for item in gameBoard:
-#         #     writeSave.write("%s\n" % item)
-#     winner = playerList[0]
-
-# Main function for solo play
-def launchSolo(row, col, saved):
-    playerList = [1,2]
-    solo = True
-    nbPlayer = 2
-    turn = 0
-    player = 1
-    gameBoard = newBoard(col,row)
-
-    if saves != None:
-        player = int(saves[0])
-        nbPlayer = int(saves[1])
-        row = int(saves[2])
-        col = int(saves[3])
-        solo = saves[4]
-        turn = int(saves[6])
-        gameBoard = saves[5].split()
-        for i in range(len(gameBoard)):
-            gameBoard[i] = gameBoard[i].split(",")
-
-    adjacents = adjacentFunc(row, col)
-    cli_print(gameBoard, row, col)
-
-    while not win(gameBoard, col, row, player, nbPlayer, turn, playerList):
-        if player == 2:
-            selRow, selCol = ia(gameBoard, row, col, player)
-        else:
-            selCol, selRow = playerInput() # Tes Input
-        put(gameBoard, col, row, selCol, selRow, player, adjacents)
-        print("\n")
-        cli_print(gameBoard, row, col) #Test Print
-        player = (player % 2) + 1
-        turn += 1
-    winner = playerList[0]
-
 def loadSave():
 	loaded = False
 	try:
+<<<<<<< HEAD
 		saveFile = open('chainreaction.save', 'r')
+=======
+		saveFile = open('chainreaction.sv', 'r')
+>>>>>>> cdaa3e8f46019894f097d1c61204306cb8efe096
 		saves = saveFile.read().split('\n')
 		saveFile.close()
 		loaded = True
 	except FileNotFoundError:
+<<<<<<< HEAD
 		print("File not found")
 	if loaded == True:
 		return saves
@@ -201,3 +112,8 @@ def loadSave():
 #         launchSolo(col,row, saved)
 #     else:
 #         launch(row, col, nbPlayer, saved)
+=======
+		return None
+	if loaded == True:
+		return saves
+>>>>>>> cdaa3e8f46019894f097d1c61204306cb8efe096
