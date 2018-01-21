@@ -56,7 +56,8 @@ def rules(world):
 def save(world):
 
 	try:
-		f = open('chainreaction.save')
+		f = open('chainreaction.save', 'w')
+		# f.writelines(world.player + "\n" + world.nbPlayer + "\n" + world.row + "\n" + world.col + "\n" + world.solo + "\n" + world.board + "\n" + world.turn)
 		f.close()
 	except FileNotFoundError:
 		with open('chainreaction.save', 'w') as f:
@@ -115,7 +116,8 @@ def start_game(world):
 
 # dummy function for the 'continue' button when no previous save is loaded
 def dummy(world):
-	pass
+	if world.save != None:
+		print("This while load the save")
 
 def end_game_screen(world):
 
