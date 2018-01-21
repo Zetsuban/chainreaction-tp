@@ -140,13 +140,35 @@ def end_game_screen(world):
 		T_MEDIUM, "EXIT", screen_center_x, screen_center_y + (T_MEDIUM * 2),
 		"center"))
 
+def load_save(world):
+
+	if world.all_object:
+		world.all_object.clear(world.screen, world.background)
+		world.all_object.empty()
+	else:
+		world.all_object = pygame.sprite.Group()
+
+	world.all_object.add(button_c(world.options["LANG"]["B_SAVE_&_BACK"], BLUE,
+								T_MEDIUM, "SAVE_&_BACK", T_MEDIUM / 2,
+								world.options["HEIGHT"] - T_MEDIUM,
+								"top_left"))
+	world.all_object.add(var_text_c("TURN" , T_MEDIUM, BLUE,
+						world.options["LANG"]["M_TURN"], 0, 0))
+	world.all_object.add(var_text_c("PLAYER" , T_MEDIUM, BLUE,
+						world.options["LANG"]["M_PLAYER"], T_MEDIUM, 0))
+	game = board_c(world, world.board, (world.row, world.col), world.nbPlayer)
+	game.current_player = world.player
+	game.solo = world.solo
+	game.turn = world.turn
+	world.all_object.add(game)
+
 def exit(world):
 	world.running = False
 
 B_FUNC = {
 	"BACK"			: main_menu,
 	"NEW_GAME" 		: game_mode_selection,
-	"CONTINUE"	 	: start_game,
+	"CONTINUE"	 	: load_save,
 	"RULES" 		: rules,
 	"CREDITS" 		: credits,
 	"EXIT" 			: exit,

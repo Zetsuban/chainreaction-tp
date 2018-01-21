@@ -47,8 +47,6 @@ def recursive_put(board, col, row, selCol, selRow, player, playerList, adjacent 
 		for i in adjacent[selRow][selCol]:
 			if int(board[i[0]][i[1]][0]) >= len(adjacent[i[0]][i[1]]):
 				return(recursive_put(board, col, row, i[1], i[0], player, playerList, adjacent))
-			# if len(playerList) < 1:
-			# 	return("stop")
 
 # AI's brain
 def ia(gameBoard, row, col, player):
@@ -82,11 +80,16 @@ def win(gameBoard, col, row, player, nbPlayer, turn, playerList):
 def loadSave():
 	loaded = False
 	try:
+<<<<<<< HEAD
 		saveFile = open('chainreaction.save', 'r')
+=======
+		saveFile = open('chainreaction.sv', 'r')
+>>>>>>> a225cd3cdd0205b61fe4326898bda61aa49e0709
 		saves = saveFile.read().split('\n')
 		saveFile.close()
 		loaded = True
 	except FileNotFoundError:
+<<<<<<< HEAD
 		print("File not found")
 	if loaded == True:
 		return saves
@@ -108,3 +111,7 @@ def loadSave():
 #         launchSolo(col,row, saved)
 #     else:
 #         launch(row, col, nbPlayer, saved)
+=======
+		return None
+	return(saves if loaded else None)
+>>>>>>> a225cd3cdd0205b61fe4326898bda61aa49e0709
