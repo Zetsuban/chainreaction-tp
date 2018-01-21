@@ -43,6 +43,9 @@ class game_c():
 
 	def world_loop(self):
 		bf.main_menu(self)
+		if self.save:
+            # mettre les valeur de la save ds les variable self.player, etc
+			pass
 		while self.running:
 			self.screen.blit(self.background, (0, 0))
 			self.event_loop()
