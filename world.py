@@ -44,7 +44,15 @@ class game_c():
 	def world_loop(self):
 		bf.main_menu(self)
 		if self.save:
-            # mettre les valeur de la save ds les variable self.player, etc
+			# self.player = int(self.save[0])
+			# self.nbPlayer = int(len(self.save[1]))
+			# self.row = int(self.save[2])
+			# self.col = int(self.save[3])
+			# self.turn = int(self.save[5])
+			# self.board = self.save[6].split()
+			# for i in range(len(self.board)):
+			# 	self.board[i] = self.board[i].split(",")
+             # Assign saved vlues to continued game
 			pass
 		while self.running:
 			self.screen.blit(self.background, (0, 0))

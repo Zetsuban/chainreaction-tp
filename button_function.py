@@ -57,7 +57,16 @@ def save(world):
 
 	try:
 		f = open('chainreaction.save', 'w')
-		# f.writelines(world.player + "\n" + world.nbPlayer + "\n" + world.row + "\n" + world.col + "\n" + world.solo + "\n" + world.board + "\n" + world.turn)
+		# f.writelines(str(world.player) + "\n" + str(len(world.nbPlayer)) + "\n" + str(world.row) + "\n" + str(world.col) + "\n" + str(world.solo) + "\n" + str(world.turn) + "\n")
+		# boardLines = ""
+		# for i in range(world.row):
+		# 	for j in range(world.col):
+		# 		boardLines += world.board[i][j]
+		# 		if j != world.col - 1:
+		# 			boardLines += ","
+		# 	boardLines += " "
+		# f.writelines(str(boardLines))
+		# Save file creation no working atm²
 		f.close()
 	except FileNotFoundError:
 		with open('chainreaction.save', 'w') as f:
